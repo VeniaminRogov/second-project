@@ -1,0 +1,56 @@
+{% extends './base.html.twig' %}
+
+{% block title %}Admin page{% endblock %}
+{% block pageTitle %}Admin{% endblock %}
+{#{% dump(users) %}#}
+
+{% block sidebar %}
+    <aside class="sidebar bg-light p-3 flex-shrink-0 flex-column d-flex">
+        <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" href="#">
+            <span>Test</span>
+        </a>
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a class="nav-link active" href="{{ path('admin_user_list') }}">User list</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link link-dark" href="{{ path('admin_add_user') }}">Add user</a>
+            </li>
+        </ul>
+        <div class="dropdown">
+            <strong>Admin</strong>
+        </div>
+    </aside>
+{% endblock %}
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <th scope="row">{{ user.id }}</th>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% for role in user.roles %}
+                    {{ role }}
+                    {% endfor %}
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('admin_edit_user', {id: user.id}) }}">Edit</a>
+                    <a class="btn btn-danger" href="{{ path('admin_delete_user', {id: user.id}) }}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="navigation">
+        {{ knp_pagination_render(users) }}
+    </div>
+{% endblock %}

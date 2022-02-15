@@ -5,3 +5,27 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
+
+app_logout:
+    path: /logout
+    methods: GET
+
+login:
+    path: /login
+    controller: App\Controller\LoginController::index
+
+admin_user_list:
+    path: /admin/user/list
+    controller: App\Controller\UserController::index
+
+admin_add_user:
+    path: /admin/user/add
+    controller: App\Controller\UserController::createAndUpdate
+
+admin_edit_user:
+    path: /admin/user/edit/{id<\d+>}
+    controller: App\Controller\UserController::createAndUpdate
+
+admin_delete_user:
+    path: /admin/user/delete/{id<\d+>}
+    controller: App\Controller\UserController::delete
