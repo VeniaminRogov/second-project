@@ -11,3 +11,22 @@
 import './bootstrap';
 
 require('bootstrap/dist/js/bootstrap.bundle.min');
+
+const form = document.querySelector('form');
+const sort = document.querySelector('#sort_category_form_sort');
+const pageInput = document.querySelector('#sort_category_form_page');
+
+console.log(sort);
+
+document.querySelectorAll('a.page-link').forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        pageInput.value = e.target.getAttribute('href').split('').pop();
+        form.submit();
+    });
+});
+
+sort.addEventListener('click', e => {
+    pageInput.value = 1;
+});
+

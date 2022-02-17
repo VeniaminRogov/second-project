@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\SortUserFormType;
 use App\Form\UserFormType;
+use App\Objects\SortUserObject;
 use App\Services\UserService;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
@@ -22,17 +24,23 @@ class UserController extends AbstractController
     )
     {}
 
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $user = $this->manager->getRepository(User::class)->findAll();
+        $sortObject = new SortUserObject();
+
+        $form = $this->createForm(SortUserFormType::class, $sortObject);
+        $form->handleRequest($request);
+
+        $user = $this->manager->getRepository(User::class)->sortUser($sortObject);
 
         $pagination = $this->paginator->paginate(
             $user,
-            1,
-            10
+            $sortObject->getPage(),
+            3
         );
 
-        return $this->render('admin/index.twig',[
+        return $this->render('admin/index.html.twig',[
+            'sortForm' => $form->createView(),
             'users' => $pagination
         ]);
     }
@@ -53,7 +61,7 @@ class UserController extends AbstractController
             ]);
         }
 
-        return $this->renderForm('admin/form_user.twig', [
+        return $this->renderForm('admin/form_user.html.twig', [
             'form' => $form,
         ]);
     }

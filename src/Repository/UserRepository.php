@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Objects\SortUserObject;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -34,6 +35,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
         $this->_em->persist($user);
         $this->_em->flush();
+    }
+
+    public function sortUser(SortUserObject $data)
+    {
+        if(!$data)
+        {
+            return $this->findAll();
+        }
+
+        $req = $this->createQueryBuilder('u');
+        if($data->getEmail())
+        {
+            $req->andWhere('u.email LIKE :email')
+                ->setParameter('email', "%".$data->getEmail())."%";
+        }
+        return $req->getQuery()->getResult();
     }
 
     // /**

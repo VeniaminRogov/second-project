@@ -8,23 +8,26 @@
         {% block stylesheets %}
             {{ encore_entry_link_tags('style') }}
         {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
     </head>
     <body>
         {% block body %}
-            <h1 class="text-center">
-                {% block pageTitle %}{% endblock %}
-            </h1>
-
-                <main class="main">
-                    {% block sidebar %}
-                    {% endblock %}
+            <main class="main">
+                {% if is_granted('ROLE_USER') %}
+                    {% include('components/sidebar/sidebar.html.twig') %}
+                {% endif %}
+                <div class="content container-fluid">
+                    <h1 class="text-center">
+                        {% block pageTitle %}{% endblock %}
+                    </h1>
                     {% block content %}
+
                     {% endblock %}
-                </main>
+                </div>
+            </main>
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </body>
 </html>

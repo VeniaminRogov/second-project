@@ -29,3 +29,23 @@ admin_edit_user:
 admin_delete_user:
     path: /admin/user/delete/{id<\d+>}
     controller: App\Controller\UserController::delete
+
+manager_products_list:
+    path: /manager/products/list
+    controller: App\Controller\ProductsController::index
+
+manager_add_products:
+    path: /manager/products/add
+    controller: App\Controller\ProductsController::createAndUpdate
+
+manager_edit_products:
+    path: /manager/products/edit/{id<\d+>}
+    controller: App\Controller\ProductsController::createAndUpdate
+
+manager_delete_products:
+    path: /manager/products/delete/{id<\d+>}
+    controller: App\Controller\ProductsController::delete
+
+manager_add_category:
+    path: /manager/category/add
+    controller: App\Controller\CategoriesController::createAndUpdate

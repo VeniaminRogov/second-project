@@ -32,15 +32,19 @@ security:
             # switch_user: true
             logout:
                 path: app_logout
+                target: login
             form_login:
                 login_path: login
                 check_path: login
+                default_target_path: manager_products_list
                 enable_csrf: true
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-#         - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/profile, roles: ROLE_USER }
+#        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/manager, roles: [ROLE_MANAGER, ROLE_ADMIN] }
+#         - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
     security:

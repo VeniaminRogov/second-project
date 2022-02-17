@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Products page{% endblock %}
+{% block pageTitle %}Products{% endblock %}
+{% block content %}
+    <div class="mb-5 d-flex justify-content-center searchForm">
+        {{ form(sortForm) }}
+    </div>
+       <table class="table table-striped">
+           <thead>
+           <tr>
+               <th scope="col">#</th>
+               <th scope="col">Image</th>
+               <th scope="col">Name</th>
+               <th scope="col">Description</th>
+               <th scope="col">Price</th>
+               <th scope="col">Quantity</th>
+               <th scope="col">Is Available</th>
+               <th scope="col">Created At</th>
+               <th scope="col">Updated At</th>
+               <th scope="col">Actions</th>
+           </tr>
+           </thead>
+           <tbody>
+           {% for product in products %}
+               <tr>
+                   <th scope="row">{{ product.id }}</th>
+                   <td>
+                       {% if product.image == null %}
+
+                       {% else %}
+                       <img src="{{ (image_url ~ product.image) | imagine_filter('list_thumb') }}" alt="No found avatar">
+                       {% endif %}
+                   </td>
+                   <td>{{ product.name }}</td>
+                   <td>{{ product.description }}</td>
+                   <td>{{ product.price }}</td>
+                   <td>{{ product.quantity }}</td>
+                   <td>{{ product.isAvailable }}</td>
+                   <td>{{ product.createdAt|date("Y-m-d H:i") }}</td>
+                   <td>{{ product.updatedAt|date("Y-m-d H:i") }}</td>
+                   <td>
+                       <a class="btn btn-primary" href="{{ path('manager_edit_products', {id: product.id}) }}">Edit</a>
+                       <a class="btn btn-danger" href="{{ path('manager_delete_products', {id: product.id}) }}">Delete</a>
+                   </td>
+               </tr>
+           {% endfor %}
+           </tbody>
+       </table>
+       <div class="navigation d-flex justify-content-center">
+           {{ knp_pagination_render(products) }}
+       </div>
+{% endblock %}
