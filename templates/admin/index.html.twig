@@ -2,7 +2,6 @@
 
 {% block title %}Admin page{% endblock %}
 {% block pageTitle %}Admin{% endblock %}
-{#{% dump(users) %}#}
 {% block content %}
     <div>
         {{ form(sortForm) }}
@@ -34,7 +33,7 @@
         {% endfor %}
         </tbody>
     </table>
-    <div class="navigation">
+    <div class="navigation d-flex justify-content-center">
         {{ knp_pagination_render(users) }}
     </div>
 {% endblock %}

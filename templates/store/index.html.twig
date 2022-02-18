@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Store{% endblock %}
+{% block pageTitle %}Products list{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="container-fluid bg-trasparent my-4 p-3" style="position: relative;">
+            <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+                {% for product in products %}
+                    {% if product.isAvailable == false %}
+                    {% else %}
+                    <div class="col">
+                        <div class="card h-100 shadow-sm">
+                            {% if product.image == null %}
+
+                            {% else %}
+                                <img class="card-img-top" src="{{ (image_url ~ product.image) | imagine_filter('list_thumb') }}" alt="No found avatar">
+                            {% endif %}
+                            <div class="card-body">
+                                <div class="clearfix mb-3">
+                                    <span class="float-start badge rounded-pill bg-warning">{{ product.category.name }}</span>
+                                    <span class="float-end price-hp">{{ product.price }}€</span>
+                                </div>
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <div class="text-center my-4">
+                                    <a href="{{ path('store_product', {id: product.id}) }}" class="btn btn-primary">Check offer</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+            <div>
+        </div>
+    </div>
+{% endblock %}

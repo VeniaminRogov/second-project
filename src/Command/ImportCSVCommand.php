@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\Serializer;
 
 class ImportCSVCommand extends Command
 {
-    protected static $defaultName = 'app:update-stock';
+    protected static $defaultName = 'app:update-product';
     public function __construct($projectDir, private ManagerRegistry $doctrine)
     {
         $this->projectDir = $projectDir;
@@ -25,7 +25,7 @@ class ImportCSVCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('Update stock records')
+        $this->setDescription('Update product records')
             ->addArgument('process_date', InputArgument::OPTIONAL, 'Date of process', date_create()->format('Y-M-D'));
     }
 
@@ -79,8 +79,11 @@ class ImportCSVCommand extends Command
         $product->setPrice($importProduct['price']);
         $product->setQuantity($importProduct['quantity']);
         $product->setIsAvailable($importProduct['is_available']);
+
+
         $prdouctCategory = $category->setName($importProduct['category']);
         $product->setCategoryId($prdouctCategory);
+
         $this->doctrine->getManager()->persist($product);
 
     }

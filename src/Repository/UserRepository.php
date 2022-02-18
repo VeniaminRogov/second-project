@@ -50,6 +50,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             $req->andWhere('u.email LIKE :email')
                 ->setParameter('email', "%".$data->getEmail())."%";
         }
+//        dd($req->getQuery()->getResult());
         return $req->getQuery()->getResult();
     }
 

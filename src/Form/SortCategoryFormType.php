@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Categories;
+use App\Entity\Category;
 use App\Objects\SortCategoryObject;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -18,8 +18,9 @@ class SortCategoryFormType extends AbstractType
         $builder
             ->add('category', EntityType::class,  [
             'label' => 'Category',
-            'class' => Categories::class,
-            'choice_label' => 'Name'
+            'class' => Category::class,
+            'choice_label' => 'Name',
+            'required' => false
         ])
             ->add('page', HiddenType::class)
             ->add('sort', SubmitType::class);

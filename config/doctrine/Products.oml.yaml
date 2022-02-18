@@ -1,0 +1,8 @@
+App\Entity\Products:
+  type: entity
+  oneToMany:
+    category:
+      targetEntity: App\Entity\Category
+      inversedBy: products
+      joinColumn:
+        nullable: false

@@ -2,7 +2,7 @@
 
 namespace App\Objects;
 
-use App\Entity\Categories;
+use App\Entity\Category;
 
 class SortCategoryObject
 {
@@ -25,12 +25,12 @@ class SortCategoryObject
         $this->page = $page;
     }
 
-    public function getCategory(): ?Categories
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(Categories $category): ?Categories
+    public function setCategory(Category $category): ?Category
     {
         $this->category = $category;
 

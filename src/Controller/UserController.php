@@ -31,10 +31,24 @@ class UserController extends AbstractController
         $form = $this->createForm(SortUserFormType::class, $sortObject);
         $form->handleRequest($request);
 
-        $user = $this->manager->getRepository(User::class)->sortUser($sortObject);
+        $userSort = $this->manager->getRepository(User::class)->sortUser($sortObject);
+        $allUsers = $this->manager->getRepository(User::class)->findAll();
+
+        if ($form->isSubmitted())
+        {
+            $pagination = $this->paginator->paginate(
+                $userSort,
+                $sortObject->getPage(),
+                3
+            );
+            return $this->render('admin/index.html.twig', [
+                'sortForm' => $form->createView(),
+                'users' => $pagination
+            ]);
+        }
 
         $pagination = $this->paginator->paginate(
-            $user,
+            $allUsers,
             $sortObject->getPage(),
             3
         );

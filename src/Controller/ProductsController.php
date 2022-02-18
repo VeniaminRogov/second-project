@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Categories;
 use App\Entity\Products;
 use App\Form\ProductsFormType;
 use App\Form\SortCategoryFormType;
@@ -21,7 +22,6 @@ class ProductsController extends AbstractController
         private ManagerRegistry $manager,
         private PaginatorInterface $paginator,
         private ProductsService $productsService,
-        private ?int $id = null,
     )
     {}
 
@@ -32,23 +32,37 @@ class ProductsController extends AbstractController
 
         $form->handleRequest($request);
 
-        $products = $this->manager->getRepository(Products::class)->sortByCategories($sortObject);
+        $productsByCategories = $this->manager->getRepository(Products::class)->sortByCategories($sortObject);
+        $products = $this->manager->getRepository(Products::class)->findAll();
+
+        if ($form->isSubmitted())
+        {
+            $pagination = $this->paginator->paginate(
+                $productsByCategories,
+                $sortObject->getPage(),
+                5
+            );
+            return $this->render('products/index.html.twig', [
+                'sortForm' => $form->createView(),
+                'pagination' => $pagination
+            ]);
+        }
 
         $pagination = $this->paginator->paginate(
             $products,
             $sortObject->getPage(),
-            3
+            5
         );
 
         return $this->render('products/index.html.twig', [
             'sortForm' => $form->createView(),
-            'products' => $pagination
+            'pagination' => $pagination,
         ]);
     }
 
-    public function createAndUpdate(Request $request): Response
+    public function createAndUpdate(Request $request, ?int $id): Response
     {
-        $products = $this->productsService->checkProductId($this->id);
+        $products = $this->productsService->checkProductId($id);
 
         $form = $this->createForm(ProductsFormType::class, $products);
         $form->handleRequest($request);

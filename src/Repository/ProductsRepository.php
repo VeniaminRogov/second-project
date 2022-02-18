@@ -28,7 +28,7 @@ class ProductsRepository extends ServiceEntityRepository
         }
 
         $req = $this->createQueryBuilder('p');
-        $req->leftJoin('p.category_id', 'pc');
+        $req->leftJoin('p.category', 'pc');
         if($data->getCategory())
         {
             $req->andWhere('pc.id = :category')

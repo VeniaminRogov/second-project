@@ -32,11 +32,9 @@ class Products
     #[ORM\Column(type: 'boolean')]
     private $isAvailable;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'products')]
-    private $userId;
 
     /**
-     * @var \DateTime $createdAt
+     * @var \DateTime
      *
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(type="datetime")
@@ -44,16 +42,16 @@ class Products
     private $createdAt;
 
     /**
-     * @var \DateTime $updatedAt
+     * @var \DateTime
      *
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(type="datetime")
      */
     private $updatedAt;
 
-    #[ORM\ManyToOne(targetEntity: Categories::class, cascade: ['persist', 'remove'], inversedBy: 'products')]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
-    private $category_id;
+    private $category;
 
 
     public function getId(): ?int
@@ -133,51 +131,39 @@ class Products
         return $this;
     }
 
-    public function getUserId(): ?User
-    {
-        return $this->userId;
-    }
-
-    public function setUserId(?User $userId): self
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
+//    public function setCreatedAt(\DateTimeInterface $createdAt): self
+//    {
+//        $this->createdAt = $createdAt;
+//
+//        return $this;
+//    }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
-    {
-        $this->updatedAt = $updatedAt;
+//    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+//    {
+//        $this->updatedAt = $updatedAt;
+//
+//        return $this;
+//    }
 
-        return $this;
-    }
+public function getCategory(): ?Category
+{
+    return $this->category;
+}
 
-    public function getCategoryId(): ?Categories
-    {
-        return $this->category_id;
-    }
+public function setCategory(?Category $category): self
+{
+    $this->category = $category;
 
-    public function setCategoryId(?Categories $category_id): self
-    {
-        $this->category_id = $category_id;
-
-        return $this;
-    }
+    return $this;
+}
 }

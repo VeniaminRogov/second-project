@@ -6,9 +6,13 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * @UniqueEntity(fields={"email"}, message="There is already an account with this email")
+ */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -26,8 +30,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string')]
     private $password;
 
-    #[ORM\OneToMany(mappedBy: 'userId', targetEntity: Products::class)]
-    private $products;
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified;
 
     public function __construct()
     {
@@ -104,32 +108,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    /**
-     * @return Collection|Products[]
-     */
-    public function getProducts(): Collection
+
+    public function getIsVerified(): ?bool
     {
-        return $this->products;
+        return $this->isVerified;
     }
 
-    public function addProduct(Products $product): self
+    public function setIsVerified(bool $isVerified): self
     {
-        if (!$this->products->contains($product)) {
-            $this->products[] = $product;
-            $product->setUserId($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Products $product): self
-    {
-        if ($this->products->removeElement($product)) {
-            // set the owning side to null (unless already changed)
-            if ($product->getUserId() === $this) {
-                $product->setUserId(null);
-            }
-        }
+        $this->isVerified = $isVerified;
 
         return $this;
     }

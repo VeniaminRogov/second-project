@@ -4,6 +4,7 @@ namespace App\Form;
 
 
 use App\Entity\Categories;
+use App\Entity\Category;
 use App\Entity\Products;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -21,9 +22,9 @@ class ProductsFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('categoryId', EntityType::class, [
+            ->add('category', EntityType::class, [
                 'label' => 'Category',
-                'class' => Categories::class,
+                'class' => Category::class,
                 'choice_label' => 'Name'
             ])
             ->add('name', TextType::class)

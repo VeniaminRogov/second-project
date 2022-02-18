@@ -7,6 +7,7 @@ use App\Objects\SortUserObject;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,17 +27,8 @@ class SortUserFormType extends AbstractType
             ->add('email', EmailType::class,[
                 'required' => false
             ])
-            ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'user' => 'ROLE_USER',
-                    'manager' => 'ROLE_MANAGER',
-                    'admin' => 'ROLE_ADMIN'
-                ]
-            ])
+            ->add('page', HiddenType::class)
             ->add('sort', SubmitType::class);
-
-        $builder->get('roles')
-            ->addModelTransformer($this->transformer);
     }
 
     public function configureOptions(OptionsResolver $resolver)

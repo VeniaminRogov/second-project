@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Categories;
+use App\Entity\Category;
 use App\Form\CategoriesFormType;
 use App\Services\CategoriesService;
 use Doctrine\Persistence\ManagerRegistry;
@@ -23,7 +24,7 @@ class CategoriesController extends AbstractController
 
     public function index(): Response
     {
-        $category = $this->manager->getRepository(Categories::class)->findAll();
+        $category = $this->manager->getRepository(Category::class)->findAll();
         $pagination = $this->paginator->paginate(
             $category,
             1,
@@ -39,7 +40,7 @@ class CategoriesController extends AbstractController
         $category = $this->service->checkCategoryId($this->id);
 
         $form = $this->createForm(CategoriesFormType::class, $category);
-        $req = $form->handleRequest($request);
+        $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
             $category = $form->getData();

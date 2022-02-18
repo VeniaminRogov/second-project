@@ -245,6 +245,9 @@
             "config/packages/stof_doctrine_extensions.yaml"
         ]
     },
+    "symfony/amqp-messenger": {
+        "version": "v6.0.3"
+    },
     "symfony/asset": {
         "version": "v6.0.3"
     },
@@ -618,6 +621,9 @@
     },
     "symfony/yaml": {
         "version": "v6.0.3"
+    },
+    "symfonycasts/verify-email-bundle": {
+        "version": "v1.8.0"
     },
     "twig/extra-bundle": {
         "version": "v3.3.8"

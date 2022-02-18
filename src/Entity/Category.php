@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoriesRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-#[ORM\Entity(repositoryClass: CategoriesRepository::class)]
-class Categories
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
+class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,17 +19,17 @@ class Categories
     #[ORM\Column(type: 'string', length: 255)]
     private $Name;
 
-    #[ORM\OneToMany(mappedBy: 'category_id', targetEntity: Products::class, cascade: ['persist', 'remove'])]
-    private $products;
-
-
     /**
-     * @var string
+     * @var string|null
      *
      * @Gedmo\Slug(fields={"Name"})
      */
+    #[Gedmo\Slug(fields: ['Name'])]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $slug;
+    private $Slug;
+
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Products::class)]
+    private $products;
 
     public function __construct()
     {
@@ -53,6 +53,18 @@ class Categories
         return $this;
     }
 
+    public function getSlug(): ?string
+    {
+        return $this->Slug;
+    }
+
+    public function setSlug(?string $Slug): self
+    {
+        $this->Slug = $Slug;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Products[]
      */
@@ -65,7 +77,7 @@ class Categories
     {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
-            $product->setCategoryId($this);
+            $product->setCategory($this);
         }
 
         return $this;
@@ -75,22 +87,10 @@ class Categories
     {
         if ($this->products->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($product->getCategoryId() === $this) {
-                $product->setCategoryId(null);
+            if ($product->getCategory() === $this) {
+                $product->setCategory(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
 
         return $this;
     }

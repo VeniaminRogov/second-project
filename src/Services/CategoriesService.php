@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 use App\Entity\Categories;
+use App\Entity\Category;
 use Doctrine\Persistence\ManagerRegistry;
 
 class CategoriesService
@@ -24,7 +25,7 @@ class CategoriesService
         return $this->doctrine->getRepository(Categories::class)->find($id);
     }
 
-    public function createAndUpdate(Categories $categories): Categories
+    public function createAndUpdate(Category $categories): Category
     {
         $this->doctrine->persist($categories);
         $this->doctrine->flush();

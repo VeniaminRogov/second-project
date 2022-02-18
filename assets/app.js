@@ -13,20 +13,31 @@ import './bootstrap';
 require('bootstrap/dist/js/bootstrap.bundle.min');
 
 const form = document.querySelector('form');
-const sort = document.querySelector('#sort_category_form_sort');
-const pageInput = document.querySelector('#sort_category_form_page');
-
-console.log(sort);
+const sortCategory = document.querySelector('#sort_category_form_sort');
+const sortUsers = document.querySelector('#sort_user_form_sort');
+const pageCategoryInput = document.querySelector('#sort_category_form_page');
+const pageUserInput = document.querySelector('#sort_user_form_page')
 
 document.querySelectorAll('a.page-link').forEach(link => {
     link.addEventListener('click', e => {
         e.preventDefault();
-        pageInput.value = e.target.getAttribute('href').split('').pop();
+        if (pageUserInput){
+            pageUserInput.value = e.target.getAttribute('href').split('').pop();
+        }
+        if(pageCategoryInput){
+            pageCategoryInput.value = e.target.getAttribute('href').split('').pop();
+        }
+
         form.submit();
     });
 });
 
-sort.addEventListener('click', e => {
-    pageInput.value = 1;
+sortCategory.addEventListener('click', e => {
+    pageCategoryInput.value = 1;
 });
+
+sortUsers.addEventListener('click', e => {
+    pageUserInput.value = 1;
+});
+
 

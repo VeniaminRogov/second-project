@@ -5,7 +5,6 @@ namespace App\Objects;
 class SortUserObject
 {
     private $email;
-    private $roles;
     private int $page = 1;
 
     /**
@@ -24,21 +23,6 @@ class SortUserObject
         $this->email = $email;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
-     * @param mixed $roles
-     */
-    public function setRoles($roles): void
-    {
-        $this->roles = $roles;
-    }
 
     /**
      * @return int
