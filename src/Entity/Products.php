@@ -49,7 +49,7 @@ class Products
      */
     private $updatedAt;
 
-    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'products')]
+    #[ORM\ManyToOne(targetEntity: Category::class, cascade: ['persist'], inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     private $category;
 

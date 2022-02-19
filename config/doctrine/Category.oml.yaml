@@ -3,4 +3,5 @@ App\Entity\Category:
   oneToMany:
     products:
       targetEntity: App\Entity\Products
+      cascade: [ persist ]
       mappedBy: category

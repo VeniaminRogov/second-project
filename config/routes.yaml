@@ -58,6 +58,10 @@ manager_add_category:
     path: /manager/category/add
     controller: App\Controller\CategoriesController::createAndUpdate
 
+manager_edit_category:
+    path: /manager/category/edit/{id<\d+>}
+    controller: App\Controller\CategoriesController::createAndUpdate
+
 store_list:
     path: /store/list
     controller: App\Controller\StoreController::index

@@ -28,7 +28,7 @@ class Category
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $Slug;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Products::class)]
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Products::class, cascade: ["persist"])]
     private $products;
 
     public function __construct()

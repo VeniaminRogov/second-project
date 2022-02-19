@@ -45,10 +45,14 @@ class CategoriesController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $category = $form->getData();
             $category = $this->service->createAndUpdate($category);
+
+            return $this->redirectToRoute('manager_edit_category', [
+                'id' => $category->getId()
+            ]);
         }
 
         return $this->renderForm('categories/form_categories.html.twig', [
-            'form' => $form
+            'form' => $form,
         ]);
     }
 }

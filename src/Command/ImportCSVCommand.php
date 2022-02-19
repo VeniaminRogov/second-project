@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use App\Entity\Categories;
+use App\Entity\Category;
 use App\Entity\Products;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
@@ -60,31 +60,50 @@ class ImportCSVCommand extends Command
         return $decoder->decode(file_get_contents($inputFile), 'csv');
     }
 
-    private function updateProduct(mixed $existingItem, mixed $importProduct)
+    private function updateProduct($existingItem, $importProduct)
     {
+        $existingItem->setName($importProduct['name']);
+        $existingItem->setDescription($importProduct['description']);
         $existingItem->setPrice($importProduct['price']);
         $existingItem->setQuantity($importProduct['quantity']);
         $existingItem->setIsAvailable($importProduct['is_available']);
+        $categories = new Category();
+
+        $categoryName = $categories->setName($importProduct['category']);
+
+        $existingItem->setCategory($categoryName);
+
 
         $this->doctrine->getManager()->persist($existingItem);
         $this->doctrine->getManager()->flush();
     }
 
-    private function createProduct(mixed $importProduct)
+    private function createProduct($importProduct)
     {
         $product = new Products();
-        $category = new Categories();
         $product->setName($importProduct['name']);
         $product->setDescription($importProduct['description']);
         $product->setPrice($importProduct['price']);
         $product->setQuantity($importProduct['quantity']);
         $product->setIsAvailable($importProduct['is_available']);
 
+        $categories = new Category();
+        $categoryId = $importProduct['category'];
+        $categoryRepo = $this->doctrine->getRepository(Category::class)->findBy(['Name' => $categoryId]);
 
-        $prdouctCategory = $category->setName($importProduct['category']);
-        $product->setCategoryId($prdouctCategory);
+        if ($categoryRepo)
+        {
+            foreach ($categoryRepo as $item)
+            {
+                $categories = $item->addProduct($product);
+            }
+            $this->doctrine->getManager()->persist($categories);
+            $this->doctrine->getManager()->flush();
+        }
+        $categoryName = $categories->setName($importProduct['category']);
+        $product->setCategory($categoryName);
 
         $this->doctrine->getManager()->persist($product);
-
+        $this->doctrine->getManager()->flush();
     }
 }

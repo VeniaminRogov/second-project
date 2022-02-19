@@ -22,7 +22,7 @@ class CategoriesService
         if(!$id){
             return $id;
         }
-        return $this->doctrine->getRepository(Categories::class)->find($id);
+        return $this->doctrine->getRepository(Category::class)->find($id);
     }
 
     public function createAndUpdate(Category $categories): Category
