@@ -28,3 +28,4 @@ services:
     App\Services\ProductsService:
         arguments:
             $targetDirectory: '%images_directory%'
+            $projectDir: '%kernel.project_dir%'

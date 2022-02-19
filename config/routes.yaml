@@ -76,4 +76,4 @@ store_list:
 
 store_product:
     path: /store/product/{id<\d+>}
-    controller: App\Controller\StoreController::getOneProduct
+    controller: App\Controller\StoreController::productPage

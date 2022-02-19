@@ -4,6 +4,9 @@
 {% block pageTitle %}Create products{% endblock %}
 
 {% block content %}
+    <div>
+        {{ form(csvForm) }}
+    </div>
     <div class="form">
         {{ form_start(form) }}
         {{ form_end(form) }}

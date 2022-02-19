@@ -2,10 +2,14 @@
 
 namespace App\Services;
 
+use App\Entity\Category;
 use App\Entity\Products;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Encoder\CsvEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ProductsService
@@ -14,7 +18,8 @@ class ProductsService
     public function __construct(
         ManagerRegistry $doctrine,
         private $targetDirectory,
-        private SluggerInterface $slugger
+        private SluggerInterface $slugger,
+        private $projectDir,
     )
     {
         $this->doctrine = $doctrine->getManager();
@@ -79,6 +84,72 @@ class ProductsService
         $this->doctrine->remove($products);
         $this->doctrine->flush();
 
+        return true;
+    }
+
+    private function getProjectDir(){
+        return $this->projectDir;
+    }
+
+    public function importFromCsv(?UploadedFile $csv)
+    {
+        $inputFileName = pathinfo($csv->getClientOriginalName(), PATHINFO_FILENAME);
+        $inputFile = $this->projectDir.'/public/import-products/'.$inputFileName.'.csv';
+
+        $decoder = new Serializer([new ObjectNormalizer()], [new CsvEncoder()]);
+
+        $importProducts = $decoder->decode(file_get_contents($inputFile), 'csv');
+
+        $products = $this->doctrine->getRepository(Products::class);
+
+        foreach ($importProducts as $importProduct)
+        {
+            if($existingItem = $products->findOneBy(['name' => $importProduct['name']]))
+            {
+                $existingItem->setName($importProduct['name']);
+                $existingItem->setDescription($importProduct['description']);
+                $existingItem->setPrice($importProduct['price']);
+                $existingItem->setQuantity($importProduct['quantity']);
+                $existingItem->setIsAvailable($importProduct['is_available']);
+                $categories = new Category();
+
+                $categoryName = $categories->setName($importProduct['category']);
+
+                $existingItem->setCategory($categoryName);
+
+                $this->doctrine->persist($existingItem);
+                $this->doctrine->flush();
+
+                return true;
+            }
+            $product = new Products();
+            $product->setName($importProduct['name']);
+            $product->setDescription($importProduct['description']);
+            $product->setPrice($importProduct['price']);
+            $product->setQuantity($importProduct['quantity']);
+            $product->setIsAvailable($importProduct['is_available']);
+
+            $categories = new Category();
+            $categoryId = $importProduct['category'];
+            $categoryRepo = $this->doctrine->getRepository(Category::class)->findBy(['Name' => $categoryId]);
+
+            if ($categoryRepo)
+            {
+                foreach ($categoryRepo as $item)
+                {
+                    $categories = $item->addProduct($product);
+                }
+                $this->doctrine->persist($categories);
+                $this->doctrine->flush();
+            }
+            $categoryName = $categories->setName($importProduct['category']);
+            $product->setCategory($categoryName);
+
+            $this->doctrine->persist($product);
+            $this->doctrine->flush();
+
+            return true;
+        }
         return true;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Products;
 use App\Services\ProductsService;
 use Doctrine\Persistence\ManagerRegistry;
@@ -20,12 +21,16 @@ class StoreController extends AbstractController
     public function index(): Response
     {
         $products = $this->doctrine->getRepository(Products::class)->findAll();
+        $categories = $this->doctrine->getRepository(Category::class)->findAll();
+
+
         return $this->render('store/index.html.twig', [
-           'products' => $products
+           'products' => $products,
+            'categories' => $categories
         ]);
     }
 
-    public function getOneProduct(?int $id): Response
+    public function productPage(?int $id): Response
     {
         $product = $this->productsService->checkProductId($id);
 

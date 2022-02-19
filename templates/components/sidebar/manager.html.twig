@@ -1,7 +1,15 @@
-<a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" href="{{ path('admin_user_list') }}">
+<a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" href="{{ path('manager_products_list') }}">
     <span class="fs-5 fw-bold">Manager Panel</span>
 </a>
 <ul class="list-unstyled ps-0">
+    <li class="mb-1">
+        <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#products" aria-expanded="false">Store</button>
+        <div class="show" id="products">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
+                <li><a class="link-dark rounded" href="{{ path('store_list') }}">Store</a></li>
+            </ul>
+        </div>
+    </li>
     <li class="mb-1">
         <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#products" aria-expanded="false">Products</button>
         <div class="show" id="products">

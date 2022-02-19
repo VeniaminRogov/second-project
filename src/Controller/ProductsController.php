@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Products;
+use App\Form\ImportScvFormType;
 use App\Form\ProductsFormType;
 use App\Form\SortCategoryFormType;
+use App\Objects\ImportCsvObject;
 use App\Objects\SortCategoryObject;
 use App\Services\ProductsService;
 use Doctrine\Persistence\ManagerRegistry;
@@ -74,9 +76,18 @@ class ProductsController extends AbstractController
                 'id' => $products->getId()
             ]);
         }
+        $importCsv = $this->createForm(ImportScvFormType::class);
+        $importCsv->handleRequest($request);
+        if($importCsv->isSubmitted())
+        {
+            $csv = $importCsv->get('csv')->getData();
+            $csvData = $this->productsService->importFromCsv($csv);
+//            dd($csvData);
+        }
 
         return $this->renderForm('products/form_products.html.twig', [
             'form' => $form,
+            'csvForm' => $importCsv
         ]);
     }
 

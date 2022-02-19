@@ -3,6 +3,14 @@
 </a>
 <ul class="list-unstyled ps-0">
     <li class="mb-1">
+        <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#products" aria-expanded="false">Store</button>
+        <div class="show" id="products">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
+                <li><a class="link-dark rounded" href="{{ path('store_list') }}">Store</a></li>
+            </ul>
+        </div>
+    </li>
+    <li class="mb-1">
         <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#users" aria-expanded="false">Users</button>
         <div class="show" id="users">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">

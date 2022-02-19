@@ -1,0 +1,29 @@
+<a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" href="{{ path('store_list') }}">
+    <span class="fs-5 fw-bold">Categories</span>
+</a>
+<ul class="list-unstyled ps-0">
+    <li class="mb-1">
+        <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#products" aria-expanded="false">Products</button>
+        <div class="show" id="products">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
+{#                {% for category in categories %}#}
+{#                    <li>#}
+{#                        <a class="link-dark rounded" href="{{ path('manager_add_category') }}">#}
+{#                            {{ category.name }}#}
+{#                        </a>#}
+{#                    </li>#}
+
+{#                {% endfor %}#}
+            </ul>
+        </div>
+    </li>
+    <li class="border-top my-3"></li>
+    <li class="mb-1">
+        <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account" aria-expanded="false">User</button>
+        <div class="show" id="account">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
+                <li><a class="link-dark rounded" href="{{ path('app_logout') }}">Logout</a></li>
+            </ul>
+        </div>
+    </li>
+</ul>
