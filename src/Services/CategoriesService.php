@@ -31,4 +31,12 @@ class CategoriesService
         $this->doctrine->flush();
         return $categories;
     }
+
+    public function delete(Category $category): bool
+    {
+        $this->doctrine->remove($category);
+        $this->doctrine->flush();
+
+        return true;
+    }
 }

@@ -12,10 +12,18 @@
         </div>
     </li>
     <li class="mb-1">
-        <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#products" aria-expanded="false">Products</button>
+        <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#products" aria-expanded="false">Categories</button>
         <div class="show" id="products">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
                 <li><a class="link-dark rounded" href="{{ path('manager_add_category') }}">Add category</a></li>
+                <li><a class="link-dark rounded" href="{{ path('manager_list_category') }}">All categories</a></li>
+            </ul>
+        </div>
+    </li>
+    <li class="mb-1">
+        <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#products" aria-expanded="false">Products</button>
+        <div class="show" id="products">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
                 <li><a class="link-dark rounded" href="{{ path('manager_products_list') }}">All products</a></li>
                 <li><a class="link-dark rounded" href="{{ path('manager_add_products') }}">Add product</a></li>
             </ul>

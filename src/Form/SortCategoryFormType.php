@@ -20,7 +20,7 @@ class SortCategoryFormType extends AbstractType
             'label' => 'Category',
             'class' => Category::class,
             'choice_label' => 'Name',
-            'required' => false
+            'required' => false,
         ])
             ->add('page', HiddenType::class)
             ->add('sort', SubmitType::class);

@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Categories;
 use App\Entity\Products;
 use App\Form\ProductsFormType;
 use App\Form\SortCategoryFormType;

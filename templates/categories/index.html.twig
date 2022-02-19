@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categories page{% endblock %}
+{% block pageTitle %}Categories{% endblock %}
+{% block content %}
+    <div style="display: none">
+        {{ form(form) }}
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Category</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <th scope="row">{{ category.id }}</th>
+                <td>
+                    {{ category.name }}
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('manager_edit_category', {id: category.id}) }}">Edit</a>
+                    <a class="btn btn-danger" href="{{ path('manager_delete_category', {id: category.id}) }}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="navigation d-flex justify-content-center">
+        {{ knp_pagination_render(categories) }}
+    </div>
+{% endblock %}

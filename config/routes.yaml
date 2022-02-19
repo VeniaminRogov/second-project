@@ -54,6 +54,10 @@ manager_delete_products:
     path: /manager/products/delete/{id<\d+>}
     controller: App\Controller\ProductsController::delete
 
+manager_list_category:
+    path: /manager/category/list
+    controller: App\Controller\CategoriesController::index
+
 manager_add_category:
     path: /manager/category/add
     controller: App\Controller\CategoriesController::createAndUpdate
@@ -61,6 +65,10 @@ manager_add_category:
 manager_edit_category:
     path: /manager/category/edit/{id<\d+>}
     controller: App\Controller\CategoriesController::createAndUpdate
+
+manager_delete_category:
+    path: /manager/category/delete/{id<\d+>}
+    controller: App\Controller\CategoriesController::delete
 
 store_list:
     path: /store/list
