@@ -82,7 +82,6 @@ class ProductsController extends AbstractController
         {
             $csv = $importCsv->get('csv')->getData();
             $csvData = $this->productsService->importFromCsv($csv);
-//            dd($csvData);
         }
 
         return $this->renderForm('products/form_products.html.twig', [
