@@ -33,20 +33,16 @@ class Products
     private $isAvailable;
 
 
-    /**
-     * @var \DateTime
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
-     */
+
+    #[ORM\Column(type: "datetime")]
+    #[Gedmo\Timestampable(on: 'create')]
     private $createdAt;
 
     /**
-     * @var \DateTime
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
+     * @var $updatedAt
      */
+    #[ORM\Column(type: "datetime")]
+    #[Gedmo\Timestampable()]
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: Category::class, cascade: ['persist'], inversedBy: 'products')]
@@ -136,24 +132,24 @@ class Products
         return $this->createdAt;
     }
 
-//    public function setCreatedAt(\DateTimeInterface $createdAt): self
-//    {
-//        $this->createdAt = $createdAt;
-//
-//        return $this;
-//    }
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-//    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
-//    {
-//        $this->updatedAt = $updatedAt;
-//
-//        return $this;
-//    }
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
 
 public function getCategory(): ?Category
 {

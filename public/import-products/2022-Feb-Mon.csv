@@ -1,8 +1,5 @@
 name,description,price,quantity,is_available,category
 Test1,test1,10,5,1,Test1
-Test1.2,test1.2,3,5,1,Test1
-Test1.3,test1.3,10,0,0,Test1
-Test1.4,test1.4,10,5,1,Test1
 Test2,test2,4,0,0,Test2
 Test3,test3,10,5,1,Test3
 Test4,test4,10,5,1,Test4
