@@ -9,6 +9,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -48,6 +49,12 @@ class ImportCSVCommand extends Command
             $this->createProduct($importProduct);
         }
 
+        $this->doctrine->getManager()->flush();
+
+        $io = new SymfonyStyle($input, $output);
+
+        $io->success('Success');
+
         return Command::SUCCESS;
     }
 
@@ -67,15 +74,8 @@ class ImportCSVCommand extends Command
         $existingItem->setPrice($importProduct['price']);
         $existingItem->setQuantity($importProduct['quantity']);
         $existingItem->setIsAvailable($importProduct['is_available']);
-        $categories = new Category();
-
-        $categoryName = $categories->setName($importProduct['category']);
-
-        $existingItem->setCategory($categoryName);
-
 
         $this->doctrine->getManager()->persist($existingItem);
-        $this->doctrine->getManager()->flush();
     }
 
     private function createProduct($importProduct)
@@ -98,12 +98,10 @@ class ImportCSVCommand extends Command
                 $categories = $item->addProduct($product);
             }
             $this->doctrine->getManager()->persist($categories);
-            $this->doctrine->getManager()->flush();
         }
         $categoryName = $categories->setName($importProduct['category']);
         $product->setCategory($categoryName);
 
         $this->doctrine->getManager()->persist($product);
-        $this->doctrine->getManager()->flush();
     }
 }

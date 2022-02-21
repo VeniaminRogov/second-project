@@ -111,16 +111,10 @@ class ProductsService
                 $existingItem->setPrice($importProduct['price']);
                 $existingItem->setQuantity($importProduct['quantity']);
                 $existingItem->setIsAvailable($importProduct['is_available']);
-                $categories = new Category();
-
-                $categoryName = $categories->setName($importProduct['category']);
-
-                $existingItem->setCategory($categoryName);
 
                 $this->doctrine->persist($existingItem);
-                $this->doctrine->flush();
 
-                return true;
+                continue;
             }
             $product = new Products();
             $product->setName($importProduct['name']);
@@ -140,16 +134,13 @@ class ProductsService
                     $categories = $item->addProduct($product);
                 }
                 $this->doctrine->persist($categories);
-                $this->doctrine->flush();
             }
             $categoryName = $categories->setName($importProduct['category']);
             $product->setCategory($categoryName);
 
             $this->doctrine->persist($product);
-            $this->doctrine->flush();
-
-            return true;
         }
+        $this->doctrine->flush();
         return true;
     }
 }
