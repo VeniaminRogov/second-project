@@ -1,5 +1,6 @@
 name,description,price,quantity,is_available,category
 Test1,test1,10,5,1,Test1
+Test_TEMP,test1,10,5,1,Test1
 Test2,test2,4,0,0,Test2
 Test3,test3,10,5,1,Test3
 Test4,test4,10,5,1,Test4

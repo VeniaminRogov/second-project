@@ -31,9 +31,18 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Products::class, cascade: ["persist"])]
     private $products;
 
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Category::class)]
+    private $children;
+
+
+    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORm\JoinColumn(name: 'parent_id', referencedColumnName: 'id')]
+    private $parent;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->children = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -93,5 +102,37 @@ class Category
         }
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param mixed $parent
+     */
+    public function setParent($parent): void
+    {
+        $this->parent = $parent;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * @param mixed $children
+     */
+    public function setChildren($children): void
+    {
+        $this->children = $children;
     }
 }

@@ -22,6 +22,7 @@ verify_email:
     path: /verify/email
     controller: App\Controller\RegistrationController::verifyUserEmail
 
+#//Admin Routes
 admin_user_list:
     path: /admin/user/list
     controller: App\Controller\UserController::index
@@ -38,6 +39,7 @@ admin_delete_user:
     path: /admin/user/delete/{id<\d+>}
     controller: App\Controller\UserController::delete
 
+#//Manager Routes
 manager_products_list:
     path: /manager/products/list
     controller: App\Controller\ProductsController::index
@@ -70,10 +72,15 @@ manager_delete_category:
     path: /manager/category/delete/{id<\d+>}
     controller: App\Controller\CategoriesController::delete
 
+#//Store Routes
 store_list:
     path: /store/list
     controller: App\Controller\StoreController::index
 
+store_product_category:
+    path: /store/list/{id<\d+>}
+    controller: App\Controller\StoreController::index
+
 store_product:
-    path: /store/product/{id<\d+>}
+    path: /store/product/{slug}
     controller: App\Controller\StoreController::productPage

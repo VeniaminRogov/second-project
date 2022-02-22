@@ -3,10 +3,31 @@
 </a>
 <ul class="list-unstyled ps-0">
     <li class="mb-1">
-        <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#products" aria-expanded="false">Store</button>
-        <div class="show" id="products">
+        <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#store" aria-expanded="false">Store</button>
+        <div class="show" id="store">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
                 <li><a class="link-dark rounded" href="{{ path('store_list') }}">Store</a></li>
+                <span>Categories</span>
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
+                    {% for categories in categories %}
+                            {% if categories.parent == null %}
+                                    <a class="link-dark rounded" href="">
+                                        {{ categories.name }}
+                                    </a>
+                                <li>
+                                    <ul>
+                                        {% for children in categories.children %}
+                                            <li>
+                                                <a class="link-dark rounded" href="{{ path('store_product', {slug: children.slug}) }}">
+                                                    {{ children.name }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+
+                                </li>
+                            {% endif %}
+                    {% endfor %}
             </ul>
         </div>
     </li>
@@ -20,8 +41,8 @@
         </div>
     </li>
     <li class="mb-1">
-        <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#products" aria-expanded="false">Categories</button>
-        <div class="show" id="products">
+        <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#categoreis" aria-expanded="false">Categories</button>
+        <div class="show" id="categoreis">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
                 <li><a class="link-dark rounded" href="{{ path('manager_add_category') }}">Add category</a></li>
                 <li><a class="link-dark rounded" href="{{ path('manager_list_category') }}">All categories</a></li>

@@ -90,6 +90,7 @@ class ProductsController extends AbstractController
         ]);
     }
 
+
     public function delete(int $id): RedirectResponse
     {
         $products = $this->productsService->checkProductId($id);

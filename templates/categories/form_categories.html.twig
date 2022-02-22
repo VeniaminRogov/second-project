@@ -4,7 +4,10 @@
 {% block pageTitle %}New category{% endblock %}
 
 {% block content %}
-    <div class="form d-flex justify-content-between">
+    <div>
+        {{ form(addForm) }}
+    </div>
+    <div class="form">
         {{ form(form) }}
     </div>
 

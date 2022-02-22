@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Products;
+use App\Services\CategoriesService;
 use App\Services\ProductsService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,30 +15,37 @@ class StoreController extends AbstractController
     public function __construct(
         private ManagerRegistry $doctrine,
         private ProductsService $productsService,
+        private CategoriesService $categoriesService
     )
     {
     }
 
-    public function index(): Response
+    public function index(?int $id): Response
     {
         $products = $this->doctrine->getRepository(Products::class)->findAll();
-        $categories = $this->doctrine->getRepository(Category::class)->findAll();
+        if($id)
+        {
+            $category = $this->categoriesService->checkCategoryId($id);
+            $categoryProduct = $category->getProducts();
 
+            return $this->render('store/index.html.twig', [
+                'products' => $categoryProduct,
+            ]);
+        }
 
         return $this->render('store/index.html.twig', [
            'products' => $products,
-            'categories' => $categories
         ]);
     }
 
-    public function productPage(?int $id): Response
+
+    public function productPage(?string $slug): Response
     {
-        $product = $this->productsService->checkProductId($id);
+        $category = $this->doctrine->getRepository(Category::class)->findAll();
 
-        dd($product);
-
+        
         return $this->render('store/product_page.html.twig', [
-            'product' => $product
+//            'product' => $product
         ]);
     }
 }

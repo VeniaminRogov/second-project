@@ -98,6 +98,7 @@ class ImportCSVCommand extends Command
                 $categories = $item->addProduct($product);
             }
             $this->doctrine->getManager()->persist($categories);
+            $this->doctrine->getManager()->flush();
         }
         $categoryName = $categories->setName($importProduct['category']);
         $product->setCategory($categoryName);

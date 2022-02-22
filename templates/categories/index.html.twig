@@ -3,6 +3,7 @@
 {% block title %}Categories page{% endblock %}
 {% block pageTitle %}Categories{% endblock %}
 {% block content %}
+    {{ dump(categories.items) }}
     <div style="display: none">
         {{ form(form) }}
     </div>
@@ -10,6 +11,7 @@
         <thead>
         <tr>
             <th scope="col">#</th>
+            <th scope="col">Parent category</th>
             <th scope="col">Category</th>
             <th scope="col">Actions</th>
         </tr>
@@ -17,15 +19,22 @@
         <tbody>
         {% for category in categories %}
             <tr>
+
+            {% if not category.parent == null %}
                 <th scope="row">{{ category.id }}</th>
                 <td>
-                    {{ category.name }}
-                </td>
-                <td>
-                    <a class="btn btn-primary" href="{{ path('manager_edit_category', {id: category.id}) }}">Edit</a>
-                    <a class="btn btn-danger" href="{{ path('manager_delete_category', {id: category.id}) }}">Delete</a>
-                </td>
+                        {{ category.parent.name }}
+                    </td>
+                    <td>
+                        {{ category.name }}
+                    </td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ path('manager_edit_category', {id: category.id}) }}">Edit</a>
+                        <a class="btn btn-danger" href="{{ path('manager_delete_category', {id: category.id}) }}">Delete</a>
+                    </td>
+            {% endif %}
             </tr>
+
         {% endfor %}
         </tbody>
     </table>

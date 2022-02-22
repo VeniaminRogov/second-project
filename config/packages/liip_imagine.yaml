@@ -13,4 +13,4 @@ liip_imagine:
 
         edit_thumb:
             filters:
-                thumbnail: { size: [ 200,200 ] }
+                thumbnail: { size: [ 150,150 ] }

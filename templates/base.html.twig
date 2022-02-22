@@ -13,10 +13,10 @@
         {% block body %}
             <main class="main">
                 {% if is_granted('ROLE_USER') %}
-                    {% include('components/sidebar/sidebar.html.twig') %}
+                    {{ render(controller('App\\Controller\\SidebarController::index')) }}
                 {% endif %}
                 <div class="content container-fluid">
-                    <h1 class="text-center">
+                    <h1 class="text-center mt-1">
                         {% block pageTitle %}{% endblock %}
                     </h1>
                     {% block content %}

@@ -29,6 +29,7 @@ class CategoriesService
     {
         $this->doctrine->persist($categories);
         $this->doctrine->flush();
+
         return $categories;
     }
 

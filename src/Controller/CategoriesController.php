@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Products;
+use App\Form\AddCategoryFormType;
 use App\Form\CategoriesFormType;
 use App\Form\SortCategoryFormType;
 use App\Objects\SortCategoryObject;
@@ -21,7 +22,6 @@ class CategoriesController extends AbstractController
         private ManagerRegistry $manager,
         private PaginatorInterface $paginator,
         private CategoriesService $service,
-        private ?int $id = null
     )
     {}
 
@@ -33,6 +33,7 @@ class CategoriesController extends AbstractController
         $form->handleRequest($request);
 
         $category = $this->manager->getRepository(Category::class)->findAll();
+
         $pagination = $this->paginator->paginate(
             $category,
             $sortObject->getPage(),
@@ -44,9 +45,11 @@ class CategoriesController extends AbstractController
         ]);
     }
 
-    public function createAndUpdate(Request $request): Response
+    public function createAndUpdate(Request $request, ?int $id): Response
     {
-        $category = $this->service->checkCategoryId($this->id);
+        $category = $this->service->checkCategoryId($id);
+
+
 
         $form = $this->createForm(CategoriesFormType::class, $category);
         $form->handleRequest($request);
@@ -60,8 +63,21 @@ class CategoriesController extends AbstractController
             ]);
         }
 
+        $formAdd = $this->createForm(AddCategoryFormType::class, $category);
+        $formAdd->handleRequest($request);
+        if($formAdd->isSubmitted() && $formAdd->isValid())
+        {
+            $category = $formAdd->getData();
+            $category = $this->service->createAndUpdate($category);
+
+            return $this->redirectToRoute('manager_edit_category', [
+                'id' => $category->getId()
+            ]);
+        }
+
         return $this->renderForm('categories/form_categories.html.twig', [
             'form' => $form,
+            'addForm' => $formAdd
         ]);
     }
 
