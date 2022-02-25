@@ -7,27 +7,36 @@
         <div class="show" id="store">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
                 <li><a class="link-dark rounded" href="{{ path('store_list') }}">Store</a></li>
-                <span>Categories</span>
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
-                    {% for categories in categories %}
-                            {% if categories.parent == null %}
-                                    <a class="link-dark rounded" href="">
-                                        {{ categories.name }}
-                                    </a>
-                                <li>
-                                    <ul>
-                                        {% for children in categories.children %}
-                                            <li>
-                                                <a class="link-dark rounded" href="{{ path('store_product', {slug: children.slug}) }}">
-                                                    {{ children.name }}
-                                                </a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
+                <li>
+                    <span>Categories</span>
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
+                            {% for categories in categories %}
+                                {% if categories.parent == null %}
+                                    {{ categories.name }}
+                                    <li>
+                                        <ul>
+                                            {% for children in categories.children %}
+                                                <li>
+                                                    <a class="link-dark rounded" href="{{ path('store_product_category', {slug: children.slug}) }}">
+                                                        {{ children.name }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
 
-                                </li>
-                            {% endif %}
-                    {% endfor %}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                </li>
+            </ul>
+        </div>
+    </li>
+    <li class="mb-1">
+        <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#cart" aria-expanded="false">Cart</button>
+        <div class="show" id="cart">
+            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
+                <li><a class="link-dark rounded" href="{{ path('cart') }}">Cart</a></li>
             </ul>
         </div>
     </li>
@@ -53,8 +62,8 @@
         <button class="btn rounded collapsed" data-bs-toggle="collapse" data-bs-target="#products" aria-expanded="false">Products</button>
         <div class="show" id="products">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
-                <li><a class="link-dark rounded" href="{{ path('manager_products_list') }}">All products</a></li>
                 <li><a class="link-dark rounded" href="{{ path('manager_add_products') }}">Add product</a></li>
+                <li><a class="link-dark rounded" href="{{ path('manager_products_list') }}">All products</a></li>
             </ul>
         </div>
     </li>

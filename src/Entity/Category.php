@@ -35,7 +35,7 @@ class Category
     private $children;
 
 
-    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'children')]
     #[ORm\JoinColumn(name: 'parent_id', referencedColumnName: 'id')]
     private $parent;
 

@@ -18,5 +18,8 @@ body {
 }
 
 .sidebar{
+    position: fixed;
+    min-height: 100%;
+    height: 100%;
     width: 280px;
 }

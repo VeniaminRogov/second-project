@@ -7,10 +7,14 @@ liip_imagine:
         # use the default cache configuration
         cache: ~
 
-        list_thumb:
+        min_thumb:
             filters:
                 thumbnail: { size: [ 50,50 ] }
 
-        edit_thumb:
+        medium_thumb:
             filters:
                 thumbnail: { size: [ 150,150 ] }
+
+        large_thumb:
+            filters:
+                thumbnail: { size: [450,300] }

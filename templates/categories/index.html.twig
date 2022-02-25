@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Categories page{% endblock %}
-{% block pageTitle %}Categories{% endblock %}
 {% block content %}
-    {{ dump(categories.items) }}
+    <h1 class="h1 text-center">
+        Categories
+    </h1>
     <div style="display: none">
         {{ form(form) }}
     </div>

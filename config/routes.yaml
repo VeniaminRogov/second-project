@@ -78,9 +78,15 @@ store_list:
     controller: App\Controller\StoreController::index
 
 store_product_category:
-    path: /store/list/{id<\d+>}
+    path: /store/{slug}
     controller: App\Controller\StoreController::index
 
 store_product:
-    path: /store/product/{slug}
+    path: /store/{slug}/{name}
     controller: App\Controller\StoreController::productPage
+
+#Cart Routes
+
+cart:
+    path: /cart/orders/
+    controller: App\Controller\OrdersController::index

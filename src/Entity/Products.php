@@ -49,6 +49,10 @@ class Products
     #[ORM\JoinColumn(nullable: false)]
     private $category;
 
+    #[ORM\ManyToOne(targetEntity: OrderItems::class, cascade: ['persist'], inversedBy: 'product')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $orderItems;
+
 
     public function getId(): ?int
     {
@@ -159,6 +163,18 @@ public function getCategory(): ?Category
 public function setCategory(?Category $category): self
 {
     $this->category = $category;
+
+    return $this;
+}
+
+public function getOrderItems(): ?OrderItems
+{
+    return $this->orderItems;
+}
+
+public function setOrderItems(?OrderItems $orderItems): self
+{
+    $this->orderItems = $orderItems;
 
     return $this;
 }

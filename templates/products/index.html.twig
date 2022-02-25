@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Products page{% endblock %}
-{% block pageTitle %}Products{% endblock %}
 {% block content %}
-
-
+    <h1 class="h1 text-center">
+        Products
+    </h1>
     <div class="mb-5">
         {{ form(sortForm) }}
     </div>
@@ -35,7 +35,7 @@
                        {% if product.image == null %}
 
                        {% else %}
-                       <img src="{{ (image_url ~ product.image) | imagine_filter('list_thumb') }}" alt="No found avatar">
+                       <img src="{{ (image_url ~ product.image) | imagine_filter('min_thumb') }}" alt="No found avatar">
                        {% endif %}
                    </td>
                    <td>{{ product.name }}</td>

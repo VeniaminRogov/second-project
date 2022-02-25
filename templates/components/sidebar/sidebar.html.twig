@@ -1,4 +1,4 @@
-<aside class="sidebar bg-light p-3 flex-shrink-0 flex-column d-flex">
+<aside class="sidebar bg-light p-3 flex-shrink-0 d-flex flex-column min-vh-100">
     {% if is_granted('ROLE_ADMIN') %}
         {% include('components/sidebar/admin.html.twig') %}
     {% endif %}

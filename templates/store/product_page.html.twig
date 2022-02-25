@@ -1,4 +1,61 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Product{% endblock %}
-{% block pageTitle %}Product Page{% endblock %}
+
+
+{% block content %}
+
+    <div class="container">
+        <div class="d-flex flex-column min-vh-100">
+            <h1 class="text-center mt-1">
+                Product page
+            </h1>
+            <hr>
+            <div class="row mt-lg-5">
+                <div class="col">
+                    <img class="" src="{{ (image_url ~ product.image) | imagine_filter('large_thumb') }}" alt="No found avatar">
+                </div>
+                <div class="col">
+                    <div class="row">
+                        <h2 class="h2">{{ product.name }}</h2>
+                        <div class="row">
+                            <p class="text-body">
+                                {{ product.description }}
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aspernatur autem dolores exercitationem magni mollitia nobis nulla omnis possimus quod reiciendis repellat totam, voluptatem. Culpa dolorum enim ipsa non quod.
+                            </p>
+                        </div>
+                        <div class="row">
+                            <h3 class="col h3">
+                                Price: {{ product.price }}
+                            </h3>
+                            <h3 class="col h3">
+                                Quantity:
+                                {{ product.quantity }}
+                            </h3>
+                        </div>
+                        <div class="col pt-lg-4">
+                            {{ form(form) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row row-cols-md-auto justify-content-center flex-nowrap mt-auto">
+                {% for categoryProduct in category_products %}
+                    <a class="card shadow-sm m-sm-3" href="{{ path('store_product', {slug: categoryProduct.category.slug, name: categoryProduct.name}) }}">
+                        {% if categoryProduct.image == null %}
+
+                        {% else %}
+                            <img class="card-img" src="{{ (image_url ~ categoryProduct.image) | imagine_filter('medium_thumb') }}" alt="No found avatar">
+                        {% endif %}
+                        <div class="">
+                                <h5 class="card-title">
+                                    {{ categoryProduct.name }}
+                                    <span class="float-end price-hp">{{ categoryProduct.price }}€</span>
+                                </h5>
+                            </div>
+                        </a>
+                    {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

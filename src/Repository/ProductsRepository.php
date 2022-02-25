@@ -38,6 +38,32 @@ class ProductsRepository extends ServiceEntityRepository
         return $req->getQuery()->getResult();
     }
 
+
+    public function getRandomEntities($count = 4)
+    {
+        return $this->createQueryBuilder('products')
+            ->addSelect('RAND() as HIDDEN rand')
+            ->addOrderBy('rand')
+            ->setMaxResults($count)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getRandomEntitiesBySlug(int $count, string $slug, Products $product)
+    {
+        return $this->createQueryBuilder('products')
+            ->addSelect('RAND() as HIDDEN rand')
+            ->addOrderBy('rand')
+            ->setMaxResults($count)
+            ->leftJoin('products.category', 'category')
+            ->andWhere('category.Slug = :slug')
+            ->setParameter('slug', $slug)
+            ->andWhere('products.id != :id')
+            ->setParameter('id', $product->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Products[] Returns an array of Products objects
     //  */
