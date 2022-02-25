@@ -21,7 +21,7 @@ class CategoriesFormType extends AbstractType
             ->add('parent', EntityType::class,[
                 'class' => Category::class,
                 'choice_label' => 'Name',
-//                'required' => false
+                'required' => false
             ])
             ->add('save', SubmitType::class);
     }

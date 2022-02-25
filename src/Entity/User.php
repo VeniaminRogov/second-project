@@ -34,12 +34,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $isVerified;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Orders::class)]
-    private $orders;
+    private $odersList;
+
+//    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Orders::class)]
+//    private $orders;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
-        $this->orders = new ArrayCollection();
+//        $this->orders = new ArrayCollection();
+$this->odersList = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -125,33 +129,63 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Orders[]
-     */
-    public function getOrders(): Collection
-    {
-        return $this->orders;
+//    /**
+//     * @return Collection|Orders[]
+//     */
+//    public function getOrders(): Collection
+//    {
+//        return $this->orders;
+//    }
+//
+//    public function addOrder(Orders $order): self
+//    {
+//        if (!$this->orders->contains($order)) {
+//            $this->orders[] = $order;
+//            $order->setUser($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeOrder(Orders $order): self
+//    {
+//        if ($this->orders->removeElement($order)) {
+//            // set the owning side to null (unless already changed)
+//            if ($order->getUser() === $this) {
+//                $order->setUser(null);
+//            }
+//        }
+//
+//        return $this;
+//    }
+
+/**
+ * @return Collection|Orders[]
+ */
+public function getOdersList(): Collection
+{
+    return $this->odersList;
+}
+
+public function addOdersList(Orders $odersList): self
+{
+    if (!$this->odersList->contains($odersList)) {
+        $this->odersList[] = $odersList;
+        $odersList->setUser($this);
     }
 
-    public function addOrder(Orders $order): self
-    {
-        if (!$this->orders->contains($order)) {
-            $this->orders[] = $order;
-            $order->setUser($this);
+    return $this;
+}
+
+public function removeOdersList(Orders $odersList): self
+{
+    if ($this->odersList->removeElement($odersList)) {
+        // set the owning side to null (unless already changed)
+        if ($odersList->getUser() === $this) {
+            $odersList->setUser(null);
         }
-
-        return $this;
     }
 
-    public function removeOrder(Orders $order): self
-    {
-        if ($this->orders->removeElement($order)) {
-            // set the owning side to null (unless already changed)
-            if ($order->getUser() === $this) {
-                $order->setUser(null);
-            }
-        }
-
-        return $this;
-    }
+    return $this;
+}
 }

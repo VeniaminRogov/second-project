@@ -10,6 +10,7 @@ use App\Objects\AddToCartObject;
 use App\Services\CartService;
 use App\Services\CategoriesService;
 use App\Services\ProductsService;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,10 +24,8 @@ class StoreController extends AbstractController
         private ProductsService $productsService,
         private CategoriesService $categoriesService,
         private CartService $cartService,
-        RequestStack $requestStack,
     )
     {
-        $this->session = $requestStack->getSession();
     }
 
     public function index(?string $slug): Response
@@ -52,24 +51,21 @@ class StoreController extends AbstractController
     public function productPage(?string $name, ?string $slug = null, Request $request): Response
     {
         $product = $this->doctrine->getRepository(Products::class)->findOneBy(['name' => $name]);
+        $productId = $product->getId();
 
         $randProducts = $this->doctrine->getRepository(Products::class)->getRandomEntitiesBySlug(4, $slug, $product);
+
 
         $addToCart = new AddToCartObject();
         $form = $this->createForm(AddToCartFormType::class, $addToCart);
         $form->handleRequest($request);
 
+
+
         if ($form->isSubmitted())
         {
             $quantity = $form->get('quantity')->getData();
-            $this->session->set('product', $product->getId());
-
-            $product = $this->session->get('product');
-
-            return $this->redirectToRoute('cart', [
-               'session_product' => $product,
-                'quantity' => $quantity
-            ]);
+            $this->cartService->addToCart($productId, $quantity);
         }
 
         return $this->render('store/product_page.html.twig', [

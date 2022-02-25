@@ -6,42 +6,58 @@ use App\Entity\OrderItems;
 use App\Entity\Orders;
 use App\Entity\Products;
 use App\Entity\User;
+use App\Objects\AddToCartObject;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Security;
 
 class CartService
 {
-    private $doctrine;
     public function __construct(
-        ManagerRegistry $doctrine,
-        private Security $security
+        private RequestStack $requestStack,
+        private ManagerRegistry $doctrine
     )
+    {}
+
+    public function addToCart(int $productId, int $quantity)
     {
-        $this->doctrine = $doctrine->getManager();
+        $cartObject = new AddToCartObject();
+
+        $cartObject->setProductId($productId);
+        $cartObject->setQuantity($quantity);
+
+        $session = $this->requestStack->getSession();
+
+        $cart = $session->get('cart', []);
+
+        if(empty($cart))
+        {
+            $cart[] = $cartObject;
+        } else {
+            foreach ($cart as $value)
+            {
+                if($value->getProductId() == $cartObject->getProductId())
+                {
+                    $newQuantity = $value->getQuantity() + $cartObject->getQuantity();
+                    $value->setQuantity($newQuantity);
+                } else {
+                    $cart[] = $cartObject;
+                }
+                $session->set('cart', $cart);
+            }
+        }
     }
 
-    public function addToCart(Products $product)
+    public function deleteFromCart($cart)
     {
-        $user = $this->security->getUser();
 
-        $order = new Orders();
-        $order->setUser($user);
-
-        $cartItem = new OrderItems();
-        $cartItem->addProduct($product);
-
-        if ($cartItem->getCount() == 0)
+        foreach ($cart as $value)
         {
-            $cartItem->setCount(1);
+            if($value->getProduictId())
+            {
+//                $this->requestStack->getSession()->;
+            }
         }
-
-        $cartItem->setCount($cartItem->getCount() + 1);
-
-        $order->addOrderItem($cartItem);
-
-        $this->doctrine->persist($order);
-        $this->doctrine->flush();
-
-        return $order;
     }
 }

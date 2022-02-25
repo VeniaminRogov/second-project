@@ -18,7 +18,6 @@ class SidebarController extends AbstractController
     public function index(): Response
     {
         $categories = $this->doctrine->getRepository(Category::class)->findAll();
-
         return $this->render('components/sidebar/sidebar.html.twig', [
             'categories' => $categories
         ]);

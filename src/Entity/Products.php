@@ -32,8 +32,6 @@ class Products
     #[ORM\Column(type: 'boolean')]
     private $isAvailable;
 
-
-
     #[ORM\Column(type: "datetime")]
     #[Gedmo\Timestampable(on: 'create')]
     private $createdAt;
@@ -49,9 +47,12 @@ class Products
     #[ORM\JoinColumn(nullable: false)]
     private $category;
 
-    #[ORM\ManyToOne(targetEntity: OrderItems::class, cascade: ['persist'], inversedBy: 'product')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: OrderItems::class, inversedBy: 'product')]
     private $orderItems;
+
+//    #[ORM\ManyToOne(targetEntity: OrderItems::class, cascade: ['persist'], inversedBy: 'products')]
+//    #[ORM\JoinColumn(nullable: true)]
+//    private $orderItems;
 
 
     public function getId(): ?int
@@ -155,27 +156,32 @@ class Products
         return $this;
     }
 
-public function getCategory(): ?Category
-{
-    return $this->category;
-}
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
 
-public function setCategory(?Category $category): self
-{
-    $this->category = $category;
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
-    return $this;
-}
+        return $this;
+    }
 
-public function getOrderItems(): ?OrderItems
-{
-    return $this->orderItems;
-}
+    /**
+     * @return mixed
+     */
+    public function getOrderItems()
+    {
+        return $this->orderItems;
+    }
 
-public function setOrderItems(?OrderItems $orderItems): self
-{
-    $this->orderItems = $orderItems;
+    /**
+     * @param mixed $orderItems
+     */
+    public function setOrderItems($orderItems): void
+    {
+        $this->orderItems = $orderItems;
+    }
 
-    return $this;
-}
 }

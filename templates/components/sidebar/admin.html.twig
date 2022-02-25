@@ -10,12 +10,14 @@
                 <li>
                     <span>Categories</span>
                         <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 ms-4 small">
-                            {% for categories in categories %}
-                                {% if categories.parent == null %}
-                                    {{ categories.name }}
+                            {% for category in categories %}
+                                {% dump(category) %}
+
+                                {% if category.parent == null %}
+                                    {{ category.name }}
                                     <li>
                                         <ul>
-                                            {% for children in categories.children %}
+                                            {% for children in category.children %}
                                                 <li>
                                                     <a class="link-dark rounded" href="{{ path('store_product_category', {slug: children.slug}) }}">
                                                         {{ children.name }}

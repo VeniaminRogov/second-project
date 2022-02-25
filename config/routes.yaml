@@ -89,4 +89,4 @@ store_product:
 
 cart:
     path: /cart/orders/
-    controller: App\Controller\OrdersController::index
+    controller: App\Controller\OrdersController::cart
