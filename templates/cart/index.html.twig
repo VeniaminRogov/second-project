@@ -13,7 +13,7 @@
                         <div class="row">
 
                             <div class="col-lg">
-                                <h5 class="mb-3"><a href="#!" class="text-body"><i
+                                <h5 class="mb-3"><a href="{{ path('store_list') }}" class="text-body"><i
                                                 class="fas fa-long-arrow-alt-left me-2"></i>Continue shopping</a></h5>
                                 <hr>
 
@@ -22,10 +22,10 @@
                                         <p class="mb-1">Shopping cart</p>
                                         <p class="mb-0">You have {{ count }} items in your cart</p>
                                     </div>
-                                    <div>
-                                        <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!"
-                                                                                                    class="text-body">price <i class="fas fa-angle-down mt-1"></i></a></p>
-                                    </div>
+{#                                    <div>#}
+{#                                        <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!"#}
+{#                                                                                                    class="text-body">price <i class="fas fa-angle-down mt-1"></i></a></p>#}
+{#                                    </div>#}
                                 </div>
                                 {% for product in products %}
 
@@ -48,7 +48,7 @@
                                                     <div style="width: 80px;">
                                                         <h5 class="mb-0">{{ product.price }}€</h5>
                                                     </div>
-                                                    <a href="#" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
+                                                    <a href="{{ path('cart_remove', {id: product.id}) }}" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -56,6 +56,18 @@
                                 {% endfor %}
 
                             </div>
+                            {% if products %}
+                                <div class="row">
+                                    <div class="col-4"></div>
+                                    <div class="col-2">
+                                        <a href="{{ path('order_create') }}" class="btn btn-primary">Buy</a>
+                                    </div>
+                                    <div class="col-2">
+                                        <a href="{{ path('cart_remove') }}" class="btn btn-danger">Clear cart</a>
+                                    </div>
+                                    <div class="col-4"></div>
+                                </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

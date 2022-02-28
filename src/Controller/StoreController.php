@@ -4,26 +4,23 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Products;
-use App\Entity\User;
 use App\Form\AddToCartFormType;
+use App\Model\CartModel;
 use App\Objects\AddToCartObject;
-use App\Services\CartService;
 use App\Services\CategoriesService;
 use App\Services\ProductsService;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 
 class StoreController extends AbstractController
 {
     public function __construct(
-        private ManagerRegistry $doctrine,
-        private ProductsService $productsService,
+        private ManagerRegistry   $doctrine,
+        private ProductsService   $productsService,
         private CategoriesService $categoriesService,
-        private CartService $cartService,
+        private CartModel         $cartService,
     )
     {
     }

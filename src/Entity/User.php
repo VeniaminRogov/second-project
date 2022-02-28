@@ -43,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->products = new ArrayCollection();
 //        $this->orders = new ArrayCollection();
-$this->odersList = new ArrayCollection();
+        $this->odersList = new ArrayCollection();
     }
 
     public function getId(): ?int

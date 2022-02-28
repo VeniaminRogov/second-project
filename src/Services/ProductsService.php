@@ -38,12 +38,13 @@ class ProductsService
 
         $products->setImage($this->uploadsImage($products, $image));
 
-        if($products->getQuantity() > 0)
+        $products->setIsAvailable(true);
+
+        if($products->getQuantity() <= 0)
         {
-            $products->setIsAvailable(true);
-        } else {
             $products->setIsAvailable(false);
         }
+
 
         $this->doctrine->persist($products);
         $this->doctrine->flush();

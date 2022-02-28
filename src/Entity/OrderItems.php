@@ -18,7 +18,7 @@ class OrderItems
     #[ORM\OneToMany(mappedBy: 'orderItems', targetEntity: Products::class)]
     private $product;
 
-    #[ORM\ManyToOne(targetEntity: Orders::class, inversedBy: 'orderItems')]
+    #[ORM\ManyToOne(targetEntity: Orders::class, cascade: ['persist'], inversedBy: 'orderItems')]
     private $orderId;
 
     #[ORM\Column(type: 'integer')]

@@ -31,131 +31,63 @@ class Orders
         $this->orderItems = new ArrayCollection();
     }
 
-//    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'orders')]
-//    private $user;
-//
-//    #[Timestampable(on: 'create')]
-//    #[ORM\Column(type: 'datetime')]
-//    private $createdAt;
-//
-//    #[ORM\OneToMany(mappedBy: 'order_id', targetEntity: OrderItems::class)]
-//    private $orderItems;
-//
-//    public function __construct()
-//    {
-//        $this->orderItems = new ArrayCollection();
-//    }
-//
+
     public function getId(): ?int
     {
         return $this->id;
     }
-//
-//    public function getUser(): ?User
-//    {
-//        return $this->user;
-//    }
-//
-//    public function setUser(?User $user): self
-//    {
-//        $this->user = $user;
-//
-//        return $this;
-//    }
-//
-//    public function getCreatedAt(): ?\DateTimeInterface
-//    {
-//        return $this->createdAt;
-//    }
-//
-//    public function setCreatedAt(\DateTimeInterface $createdAt): self
-//    {
-//        $this->createdAt = $createdAt;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * @return Collection|OrderItems[]
-//     */
-//    public function getOrderItems(): Collection
-//    {
-//        return $this->orderItems;
-//    }
-//
-//    public function addOrderItem(OrderItems $orderItem): self
-//    {
-//        if (!$this->orderItems->contains($orderItem)) {
-//            $this->orderItems[] = $orderItem;
-//            $orderItem->setOrderId($this);
-//        }
-//
-//        return $this;
-//    }
-//
-//    public function removeOrderItem(OrderItems $orderItem): self
-//    {
-//        if ($this->orderItems->removeElement($orderItem)) {
-//            // set the owning side to null (unless already changed)
-//            if ($orderItem->getOrderId() === $this) {
-//                $orderItem->setOrderId(null);
-//            }
-//        }
-//
-//        return $this;
-//    }
 
-public function getUser(): ?User
-{
-    return $this->user;
-}
-
-public function setUser(?User $user): self
-{
-    $this->user = $user;
-
-    return $this;
-}
-
-public function getCreatedAt(): ?\DateTimeInterface
-{
-    return $this->createdAt;
-}
-
-public function setCreatedAt(\DateTimeInterface $createdAt): self
-{
-    $this->createdAt = $createdAt;
-
-    return $this;
-}
-
-/**
- * @return Collection|OrderItems[]
- */
-public function getOrderItems(): Collection
-{
-    return $this->orderItems;
-}
-
-public function addOrderItem(OrderItems $orderItem): self
-{
-    if (!$this->orderItems->contains($orderItem)) {
-        $this->orderItems[] = $orderItem;
-        $orderItem->setOrderId($this);
+    public function getUser(): ?User
+    {
+        return $this->user;
     }
 
-    return $this;
-}
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
-public function removeOrderItem(OrderItems $orderItem): self
-{
-    if ($this->orderItems->removeElement($orderItem)) {
-        // set the owning side to null (unless already changed)
-        if ($orderItem->getOrderId() === $this) {
-            $orderItem->setOrderId(null);
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|OrderItems[]
+     */
+    public function getOrderItems(): Collection
+    {
+        return $this->orderItems;
+    }
+
+    public function addOrderItem(OrderItems $orderItem): self
+    {
+        if (!$this->orderItems->contains($orderItem)) {
+            $this->orderItems[] = $orderItem;
+            $orderItem->setOrderId($this);
         }
+
+        return $this;
     }
 
-    return $this;
-}
+    public function removeOrderItem(OrderItems $orderItem): self
+    {
+        if ($this->orderItems->removeElement($orderItem)) {
+            // set the owning side to null (unless already changed)
+            if ($orderItem->getOrderId() === $this) {
+                $orderItem->setOrderId(null);
+            }
+        }
+
+        return $this;
+    }
 }

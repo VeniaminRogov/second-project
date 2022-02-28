@@ -88,5 +88,17 @@ store_product:
 #Cart Routes
 
 cart:
-    path: /cart/orders/
+    path: /cart/
     controller: App\Controller\OrdersController::cart
+
+cart_remove:
+    path: /cart/remove/{id?}
+    controller: App\Controller\OrdersController::deleteFromCart
+
+order:
+    path: /orders/
+    controller: App\Controller\OrdersController::orders
+
+order_create:
+    path: cart/order/
+    controller: App\Controller\OrdersController::createOrder
