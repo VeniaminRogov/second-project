@@ -31,7 +31,7 @@ class ProductsController extends AbstractController
         $sortObject = new SortCategoryObject();
         $form = $this->createForm(SortCategoryFormType::class, $sortObject);
 
-        $form->handleRequest($request);
+    $form->handleRequest($request);
 
         $productsByCategories = $this->manager->getRepository(Products::class)->sortByCategories($sortObject);
         $products = $this->manager->getRepository(Products::class)->findAll();

@@ -18,6 +18,7 @@ register:
     path: /register
     controller: App\Controller\RegistrationController::register
 
+
 verify_email:
     path: /verify/email
     controller: App\Controller\RegistrationController::verifyUserEmail

@@ -1,0 +1,21 @@
+sidebar:
+  admin: Админ
+  manager: Менеджер
+  store: Магазин
+  categories:
+    name: Категории
+    category: Категория
+    add: Добавить категорию
+    all: Все категории
+  products:
+    name: Продукты
+    add: Добавить продукт
+    all: Все продукты
+  cart: Корзина
+  orders: Заказы
+  order: Ваши заказы
+  logout: Выход
+  users:
+    name: Пользователи
+    all: Все пользователи
+    add: Добавить пользователя

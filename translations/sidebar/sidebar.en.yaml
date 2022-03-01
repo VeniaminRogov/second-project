@@ -1,0 +1,21 @@
+sidebar:
+  admin: Admin
+  manager: Manger
+  store: Store
+  categories:
+    name: Categories
+    category: Category
+    add: Add category
+    all: All categories
+  products:
+    name: Products
+    add: Add product
+    all: All products
+  cart: Cart
+  orders: Orders
+  order: Your orders
+  logout: Logout
+  users:
+    name: Users
+    all: All users
+    add: Add users

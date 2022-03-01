@@ -11,12 +11,14 @@
 import './bootstrap';
 
 require('bootstrap/dist/js/bootstrap.bundle.min');
+require('jquery/dist/jquery.min')
 
 const form = document.querySelector('form');
 const sortCategory = document.querySelector('#sort_category_form_sort');
 const sortUsers = document.querySelector('#sort_user_form_sort');
 const pageCategoryInput = document.querySelector('#sort_category_form_page');
 const pageUserInput = document.querySelector('#sort_user_form_page');
+const langBtn = document.querySelector('#dropdownMenuButton1');
 
 document.querySelectorAll('a.page-link').forEach(link => {
     link.addEventListener('click', e => {
@@ -38,5 +40,7 @@ sortCategory.addEventListener('click', e => {
 sortUsers.addEventListener('click', e => {
     pageUserInput.value = 1;
 });
+
+
 
 

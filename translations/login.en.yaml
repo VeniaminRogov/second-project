@@ -1,0 +1,5 @@
+login:
+  login: login
+  email: email
+  password: password
+  registration: registration

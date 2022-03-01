@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Form\LanguageFormType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class SidebarController extends AbstractController
@@ -15,13 +17,17 @@ class SidebarController extends AbstractController
     {
     }
 
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $locale = $request->getLocale();
+
+//        dd($_locale);
         $user = $this->getUser();
 
         $categories = $this->doctrine->getRepository(Category::class)->findAll();
         return $this->render('components/sidebar/sidebar.html.twig', [
-            'categories' => $categories
+            'categories' => $categories,
+            'user' => $user,
         ]);
     }
 }

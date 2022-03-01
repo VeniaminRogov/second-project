@@ -1,3 +1,4 @@
+{% trans_default_domain 'login' %}
 {% extends 'base.html.twig' %}
 
 {% block title %}Login page{% endblock %}
@@ -11,7 +12,8 @@
     {% endif %}
 
         <div class="row">
-            <h1 class="h1 text-center">Login</h1>
+
+            <h1 class="h1 text-center">{{ 'login.login'|trans|capitalize }}</h1>
             <div class="col-2"></div>
             <div class="col">
                 {% if error %}
@@ -19,18 +21,18 @@
                 {% endif %}
 
                 <form action="{{ path('login') }}" method="post">
-                    <label class="form-label" for="username">Email:</label>
+                    <label class="form-label" for="username">{{ 'login.email'|trans|capitalize }}:</label>
                     <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"/>
 
-                    <label class="form-label" for="password">Password:</label>
+                    <label class="form-label" for="password">{{ 'login.password'|trans|capitalize }}:</label>
                     <input class="form-control" type="password" id="password" name="_password"/>
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                     <input type="hidden" name="_target_path" value="/store/list"/>
 
                     <div class="d-flex justify-content-evenly align-items-center mt-2">
-                        <button class="btn btn-primary" type="submit">login</button>
-                        <a href="{{ path('register') }}" class="btn btn-info">Registration</a>
+                        <button class="btn btn-primary" type="submit">{{ 'login.login'|trans|capitalize }}</button>
+                        <a href="{{ path('register') }}" class="btn btn-info">{{ 'login.registration'|trans|capitalize }}</a>
 {#                        <a href="{{ path('app_forgot_password_request') }}" class="btn btn-warning">Forgot password</a>#}
                     </div>
                 </form>

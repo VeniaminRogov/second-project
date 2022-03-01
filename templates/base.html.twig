@@ -13,7 +13,7 @@
         {% block body %}
             <main class="main">
                 {% if is_granted('ROLE_USER') %}
-                    {{ render(controller('App\\Controller\\SidebarController::index')) }}
+                    {{ render(controller('App\\Controller\\SidebarController::index', {lang: 'ru'})) }}
                 {% endif %}
                 <div class="content container-fluid h-100">
                     <div class="row d-flex justify-content-center align-items-center h-100 overflow-hidden">
