@@ -15,9 +15,13 @@
                 {% if is_granted('ROLE_USER') %}
                     {{ render(controller('App\\Controller\\SidebarController::index')) }}
                 {% endif %}
-                <div class="content container-fluid overflow-hidden">
-                    {% block content %}
-                    {% endblock %}
+                <div class="content container-fluid h-100">
+                    <div class="row d-flex justify-content-center align-items-center h-100 overflow-hidden">
+
+                        {% block content %}
+                        {% endblock %}
+
+                    </div>
                 </div>
             </main>
         {% endblock %}

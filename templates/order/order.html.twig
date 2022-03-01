@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Store{% endblock %}
+{% block title %}Orders{% endblock %}
 {% block content %}
 
             <div class="col">
-                <h1 class="h1 text-center">Your cart</h1>
+                <h1 class="h1 text-center">Your orders</h1>
                 <div class="card">
                     <div class="card-body p-4">
 
@@ -13,20 +13,7 @@
                             <div class="col-lg">
                                 <h5 class="mb-3"><a href="{{ path('store_list') }}" class="text-body"><i
                                                 class="fas fa-long-arrow-alt-left me-2"></i>Continue shopping</a></h5>
-                                <hr>
-
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <div>
-                                        <p class="mb-1">Shopping cart</p>
-                                        <p class="mb-0">You have {{ count }} items in your cart</p>
-                                    </div>
-{#                                    <div>#}
-{#                                        <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!"#}
-{#                                                                                                    class="text-body">price <i class="fas fa-angle-down mt-1"></i></a></p>#}
-{#                                    </div>#}
-                                </div>
-                                {% for product in products %}
-
+                                {% for product in order_items.product %}
                                     <div class="card mb-3">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between">
@@ -40,32 +27,19 @@
                                                     </div>
                                                 </div>
                                                 <div class="d-flex flex-row align-items-center">
-                                                    <div style="width: 50px;">
-                                                        <h5 class="fw-normal mb-0">{{ product.quantity }}</h5>
-                                                    </div>
+{#                                                    <div style="width: 50px;">#}
+{#                                                        <h5 class="fw-normal mb-0">{{ product.count }}</h5>#}
+{#                                                    </div>#}
                                                     <div style="width: 80px;">
                                                         <h5 class="mb-0">{{ product.price }}€</h5>
                                                     </div>
-                                                    <a href="{{ path('cart_remove', {id: product.id}) }}" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 {% endfor %}
-
                             </div>
-                            {% if products %}
-                                <div class="row">
-                                    <div class="col-4"></div>
-                                    <div class="col-2">
-                                        <a href="{{ path('order_create') }}" class="btn btn-primary">Buy</a>
-                                    </div>
-                                    <div class="col-2">
-                                        <a href="{{ path('cart_remove') }}" class="btn btn-danger">Clear cart</a>
-                                    </div>
-                                    <div class="col-4"></div>
-                                </div>
-                            {% endif %}
+
                         </div>
                     </div>
                 </div>

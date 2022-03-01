@@ -22,7 +22,7 @@ class MailService
             ->from('veniamin.r@zimalab.com')
             ->to('rogov.veniamin@gmail.com')
             ->subject('test')
-            ->htmlTemplate('email/add_client_message.html.twig')
+            ->htmlTemplate('email/add_new_order.twig')
             ->context([
                 'username' => $client->getUser()->getUserIdentifier(),
                 'client' => $client,

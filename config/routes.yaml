@@ -95,10 +95,16 @@ cart_remove:
     path: /cart/remove/{id?}
     controller: App\Controller\OrdersController::deleteFromCart
 
-order:
+
+#Order Routes
+order_list:
     path: /orders/
     controller: App\Controller\OrdersController::orders
 
+order:
+    path: /orders/order/{id}
+    controller: App\Controller\OrdersController::order
+
 order_create:
-    path: cart/order/
+    path: cart/order/create
     controller: App\Controller\OrdersController::createOrder

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\OrderItems;
 use App\Entity\Orders;
 use App\Entity\Products;
+use App\Mail\MailNotification;
 use App\Model\CartModel;
 use App\Services\OrderService;
 use Doctrine\Persistence\ManagerRegistry;
@@ -12,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class OrdersController extends AbstractController
 {
@@ -23,20 +25,30 @@ class OrdersController extends AbstractController
     {
     }
 
+    public function orders(): Response
+    {
+        $orders = $this->doctrine->getRepository(Orders::class)->findAll();
+
+
+        return $this->render('order/index.html.twig', [
+            'orders' => $orders,
+        ]);
+    }
+
     public function createOrder(): Response
     {
         $user = $this->getUser();
         $this->orderService->setOrder($user);
 
-        return $this->redirectToRoute('order');
+        return $this->redirectToRoute('order_list');
     }
 
-    public function orders(): Response
+    public function order($id): Response
     {
-        $ordersList = $this->doctrine->getRepository(Orders::class)->findAll();
+        $orderItems = $this->doctrine->getRepository(OrderItems::class)->find($id);
 
-        return $this->render('order/index.html.twig', [
-            'orders' => $ordersList
+        return $this->render('order/order.html.twig', [
+            'order_items' => $orderItems
         ]);
     }
 

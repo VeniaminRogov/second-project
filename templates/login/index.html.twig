@@ -10,8 +10,8 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <div class="container">
         <div class="row">
+            <h1 class="h1 text-center">Login</h1>
             <div class="col-2"></div>
             <div class="col">
                 {% if error %}
@@ -37,6 +37,5 @@
             </div>
             <div class="col-2"></div>
         </div>
-    </div>
 
 {% endblock %}

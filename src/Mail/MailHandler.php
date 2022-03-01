@@ -22,6 +22,25 @@ class MailHandler
         if (MailNotification::USER_REGISTRATION == $mailNotification->getType()){
             $this->onRegistrationUser($mailNotification->getId(), $mailNotification->getVerificationUrl());
         }
+        if (MailNotification::CREATE_ORDER == $mailNotification->getType()){
+            $this->onCreateOrder($mailNotification->getId(), $mailNotification->getOrderId());
+        }
+    }
+
+    public function onCreateOrder($id,$orderId)
+    {
+        $user = $this->userRepository->find($id);
+        $email = (new TemplatedEmail())
+            ->from($user->getEmail())
+            ->to('rogov.veniamin@gmail.com')
+            ->subject('Create new order')
+            ->htmlTemplate('email/add_new_order.html.twig')
+            ->context([
+                'username' => $user->getUserIdentifier(),
+                'order_id' => $orderId
+            ]);
+
+        $this->mailer->sendEmailAccrosMessanger($email);
     }
 
     public function onRegistrationUser($id, $verificationUrl){

@@ -5,14 +5,17 @@ namespace App\Services;
 use App\Entity\OrderItems;
 use App\Entity\Orders;
 use App\Entity\Products;
+use App\Mail\MailNotification;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class OrderService
 {
     private $session;
     private $doctrine;
-    public function __construct(RequestStack $requestStack, ManagerRegistry $doctrine,)
+    public function __construct(RequestStack $requestStack, ManagerRegistry $doctrine, private MessageBusInterface $bus,
+    )
     {
         $this->session = $requestStack->getSession();
         $this->doctrine = $doctrine->getManager();
@@ -42,11 +45,14 @@ class OrderService
                 $product->setIsAvailable(false);
             }
             $orderItems->addProduct($product);
-            $orderItems->setCount($quantity);
         }
-
+        $count = count($cart);
+        $orderItems->setCount($count);
         $this->doctrine->persist($orderItems);
         $this->doctrine->flush();
+
+        $this->bus->dispatch(new MailNotification($user->getId(),$order->getId(),MailNotification::CREATE_ORDER));
+
     }
 
     public function removeOrder($order)
