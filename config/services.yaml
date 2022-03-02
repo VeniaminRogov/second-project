@@ -29,3 +29,5 @@ services:
         arguments:
             $targetDirectory: '%images_directory%'
             $projectDir: '%kernel.project_dir%'
+    App\EventSubscriber\LocaleSubscriber:
+        arguments: [ '%kernel.default_locale%' ]

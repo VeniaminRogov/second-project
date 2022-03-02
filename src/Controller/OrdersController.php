@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\OrderItems;
 use App\Entity\Orders;
 use App\Entity\Products;
-use App\Mail\MailNotification;
 use App\Model\CartModel;
 use App\Services\OrderService;
 use Doctrine\Persistence\ManagerRegistry;
@@ -13,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class OrdersController extends AbstractController
 {
@@ -52,7 +51,7 @@ class OrdersController extends AbstractController
         ]);
     }
 
-    public function cart(RequestStack $requestStack): Response
+    public function cart(RequestStack $requestStack, TranslatorInterface $translator): Response
     {
         $session = $requestStack->getSession();
         $cart = $session->get('cart', []);
@@ -70,6 +69,8 @@ class OrdersController extends AbstractController
         }
 
         $count = count($productsArr);
+
+
 
         return $this->render('cart/index.html.twig', [
             'products' => $productsArr,

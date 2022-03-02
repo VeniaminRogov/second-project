@@ -23,18 +23,25 @@ class UserFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
        $builder
-           ->add('email', EmailType::class)
-           ->add('password', TextType::class)
+           ->add('email', EmailType::class, [
+               'label' => 'form.email'
+           ])
+           ->add('password', TextType::class, [
+               'label' => 'form.password'
+           ])
            ->add('roles', ChoiceType::class, [
                'choices' => [
-                   'user' => 'ROLE_USER',
-                   'manager' => 'ROLE_MANAGER',
-                   'admin' => 'ROLE_ADMIN'
+                   'form.user_role.user' => 'ROLE_USER',
+                   'form.user_role.manager' => 'ROLE_MANAGER',
+                   'form.user_role.admin' => 'ROLE_ADMIN'
                ]
            ])
            ->add('is_verified', CheckboxType::class, [
+               'label' => 'form.isVerified'
            ])
-           ->add('save', SubmitType::class);
+           ->add('save', SubmitType::class, [
+               'label' => 'form.save'
+           ]);
 
         $builder->get('roles')
             ->addModelTransformer($this->transformer);
@@ -43,7 +50,8 @@ class UserFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-           'data_class' => User::class
+           'data_class' => User::class,
+            'translation_domain' => 'form'
         ]);
     }
 }

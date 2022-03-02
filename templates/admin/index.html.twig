@@ -1,9 +1,11 @@
+{% trans_default_domain 'admin' %}
+
 {% extends './base.html.twig' %}
 
 {% block title %}Admin page{% endblock %}
 {% block content %}
     <h1 class="h1 text-center">
-        All users
+        {{ 'users.title.all'|trans }}
     </h1>
     <div>
         {{ form(sortForm) }}
@@ -12,9 +14,9 @@
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Email</th>
-                <th scope="col">Role</th>
-                <th scope="col">Actions</th>
+                <th scope="col">{{ 'users.email'|trans }}</th>
+                <th scope="col">{{ 'users.role'|trans }}</th>
+                <th scope="col">{{ 'actions'|trans }}</th>
             </tr>
         </thead>
         <tbody>
@@ -28,8 +30,8 @@
                     {% endfor %}
                 </td>
                 <td>
-                    <a class="btn btn-primary" href="{{ path('admin_edit_user', {id: user.id}) }}">Edit</a>
-                    <a class="btn btn-danger" href="{{ path('admin_delete_user', {id: user.id}) }}">Delete</a>
+                    <a class="btn btn-primary" href="{{ path('admin_edit_user', {id: user.id}) }}">{{ 'eidt'|trans }}</a>
+                    <a class="btn btn-danger" href="{{ path('admin_delete_user', {id: user.id}) }}">{{ 'delete'|trans }}</a>
                 </td>
             </tr>
         {% endfor %}

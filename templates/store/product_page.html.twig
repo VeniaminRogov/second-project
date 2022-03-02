@@ -1,3 +1,5 @@
+{% trans_default_domain 'store' %}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Product{% endblock %}
@@ -7,7 +9,7 @@
 
         <div class="d-flex flex-column min-vh-100">
             <h1 class="text-center mt-1">
-                Product page
+                {{ 'store.product.title'|trans }}
             </h1>
             <hr>
             <div class="row mt-lg-5">
@@ -25,10 +27,10 @@
                         </div>
                         <div class="row">
                             <h3 class="col h3">
-                                Price: {{ product.price }}
+                                {{ 'store.product.price'|trans }}: {{ product.price }}
                             </h3>
                             <h3 class="col h3">
-                                Quantity:
+                                {{ 'store.product.quantity'|trans }}:
                                 {{ product.quantity }}
                             </h3>
                         </div>

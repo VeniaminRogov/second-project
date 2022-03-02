@@ -1,0 +1,21 @@
+form:
+  quantity: Quantity
+  category: Category
+  name: Name
+  description: Description
+  price: Price
+  image: Image
+  isActive: Active
+  isVerified: Verified
+  csv: Choose csv file
+  import: Import
+  parent: Parent category
+  email: Email
+  password: Password
+  user_role:
+    user: user
+    manager: manager
+    admin: admin
+  sort: sort
+  save: save
+  add: add

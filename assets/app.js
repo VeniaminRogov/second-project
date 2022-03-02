@@ -8,17 +8,18 @@
 // any CSS you import will output into a single css file (style.css in this case)
 
 // start the Stimulus application
-import './bootstrap';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
-require('bootstrap/dist/js/bootstrap.bundle.min');
-require('jquery/dist/jquery.min')
+import './bootstrap';
+import $ from 'jquery';
+import Cookies from "js-cookie";
+
 
 const form = document.querySelector('form');
 const sortCategory = document.querySelector('#sort_category_form_sort');
 const sortUsers = document.querySelector('#sort_user_form_sort');
 const pageCategoryInput = document.querySelector('#sort_category_form_page');
 const pageUserInput = document.querySelector('#sort_user_form_page');
-const langBtn = document.querySelector('#dropdownMenuButton1');
 
 document.querySelectorAll('a.page-link').forEach(link => {
     link.addEventListener('click', e => {
@@ -33,14 +34,27 @@ document.querySelectorAll('a.page-link').forEach(link => {
     });
 });
 
-sortCategory.addEventListener('click', e => {
-    pageCategoryInput.value = 1;
+if(sortCategory)
+{
+    sortCategory.addEventListener('click', e => {
+        pageCategoryInput.value = 1;
+    });
+}
+
+if (sortUsers)
+{
+    sortUsers.addEventListener('click', e => {
+        pageUserInput.value = 1;
+    });
+}
+
+$(document).ready(function(){
+    // Cookies.remove('lang');
+    $('option[value='+Cookies.get('lang')+']').attr('selected', 'selected');
+    $("select.language").change(function(){
+        let lang = $(this).children("option:selected").val();
+        console.log(lang)
+        Cookies.set('lang', lang);
+        location.reload();
+    });
 });
-
-sortUsers.addEventListener('click', e => {
-    pageUserInput.value = 1;
-});
-
-
-
-

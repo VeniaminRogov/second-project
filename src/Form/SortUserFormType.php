@@ -26,17 +26,21 @@ class SortUserFormType extends AbstractType
     {
         $builder
             ->add('email', TextType::class,[
-                'required' => false
+                'required' => false,
+                'label' => 'form.email'
             ])
             ->add('page', HiddenType::class)
-            ->add('sort', SubmitType::class);
+            ->add('sort', SubmitType::class, [
+                'label' => 'form.sort'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver
             ->setDefaults([
-               'data_class' => SortUserObject::class
+               'data_class' => SortUserObject::class,
+                'translation_domain' => 'form'
             ]);
     }
 }

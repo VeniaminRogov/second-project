@@ -1,10 +1,12 @@
+{% trans_default_domain 'admin' %}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Products page{% endblock %}
 
 {% block content %}
     <h1 class="h1 text-center">
-        Create products
+        {{ 'products.title.create'|trans }}
     </h1>
     <div>
         {{ form(csvForm) }}

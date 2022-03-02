@@ -1,10 +1,12 @@
+{% trans_default_domain 'store' %}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Orders{% endblock %}
 {% block content %}
 
             <div class="col">
-                <h1 class="h1 text-center">Your orders</h1>
+                <h1 class="h1 text-center">{{ 'store.orders.title'|trans }}</h1>
                 <div class="card">
                     <div class="card-body p-4">
 
@@ -12,7 +14,7 @@
 
                             <div class="col-lg">
                                 <h5 class="mb-3"><a href="{{ path('store_list') }}" class="text-body"><i
-                                                class="fas fa-long-arrow-alt-left me-2"></i>Continue shopping</a></h5>
+                                                class="fas fa-long-arrow-alt-left me-2"></i>{{ 'store.cart.continue'|trans }}</a></h5>
                                 {% for product in order_items.product %}
                                     <div class="card mb-3">
                                         <div class="card-body">

@@ -17,19 +17,25 @@ class CategoriesFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+                'label' => 'form.name'
+            ])
             ->add('parent', EntityType::class,[
                 'class' => Category::class,
                 'choice_label' => 'Name',
-                'required' => false
+                'required' => false,
+                'label' => 'form.parent'
             ])
-            ->add('save', SubmitType::class);
+            ->add('save', SubmitType::class, [
+                'label' => 'form.save'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-           'data_class' => Category::class
+           'data_class' => Category::class,
+            'translation_domain' => 'form'
         ]);
     }
 }

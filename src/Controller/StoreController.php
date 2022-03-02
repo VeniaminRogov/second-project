@@ -12,7 +12,9 @@ use App\Services\ProductsService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class StoreController extends AbstractController
 {
@@ -22,12 +24,12 @@ class StoreController extends AbstractController
         private CategoriesService $categoriesService,
         private CartModel         $cartService,
     )
-    {
-    }
+    {}
 
     public function index(?string $slug): Response
     {
         $products = $this->doctrine->getRepository(Products::class)->findAll();
+
 
         if($slug)
         {

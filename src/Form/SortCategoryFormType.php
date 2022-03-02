@@ -17,19 +17,22 @@ class SortCategoryFormType extends AbstractType
     {
         $builder
             ->add('category', EntityType::class,  [
-            'label' => 'Category',
+            'label' => 'form.category',
             'class' => Category::class,
             'choice_label' => 'Name',
             'required' => false,
         ])
             ->add('page', HiddenType::class)
-            ->add('sort', SubmitType::class);
+            ->add('sort', SubmitType::class, [
+                'label' => 'form.sort'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => SortCategoryObject::class,
+            'translation_domain' => 'form'
         ]);
     }
 }

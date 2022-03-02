@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ImportScvFormType extends AbstractType
 {
@@ -13,9 +14,18 @@ class ImportScvFormType extends AbstractType
     {
         $builder
             ->add('csv', FileType::class , [
-                'label' => 'Select csv file',
+                'label' => 'form.csv',
                 'mapped' => false,
             ])
-            ->add('import', SubmitType::class);
+            ->add('import', SubmitType::class, [
+                'label' => 'form.import'
+            ]);
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'translation_domain' => 'form'
+        ]);
     }
 }

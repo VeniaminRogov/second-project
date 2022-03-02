@@ -1,0 +1,29 @@
+products:
+  title:
+    create: Create product
+    all: All products
+category:
+  name: Category
+  title:
+    create: Create category
+    new: New category
+    new_parent: New parent category
+  parent: Parent category
+categories: Categories
+users:
+  title:
+    new: Create user
+    all: All users
+  email: Email
+  role: Role
+name: Name
+image: Image
+descr: Description
+price: Price
+quantity: Quantity
+is: Has
+created: Created at
+updated: Updated at
+actions: Actions
+eidt: Edit
+delete: Delete

@@ -19,13 +19,10 @@ class SidebarController extends AbstractController
 
     public function index(Request $request): Response
     {
-        $locale = $request->getLocale();
-
-//        dd($_locale);
         $user = $this->getUser();
 
         $categories = $this->doctrine->getRepository(Category::class)->findAll();
-        return $this->render('components/sidebar/sidebar.html.twig', [
+        return $this->render('sidebar/sidebar.html.twig', [
             'categories' => $categories,
             'user' => $user,
         ]);

@@ -1,0 +1,29 @@
+products:
+  title:
+    create: Создать продукт
+    all: Список продуктов
+category:
+  name: Ктегория
+  title:
+    create: Создать категорию
+    new: Новая категория
+    new_parent: Новая подкатегория
+  parent: Родительская категория
+categories: Категории
+users:
+  title:
+    new: Создать пользователя
+    all: Список пользователей
+  email: Почта
+  role: Роль
+name: Название
+image: Изображение
+descr: Описание
+price: Цена
+quantity: Количество
+is: Присутствует
+created: Создано
+updated: Обнавлено
+actions: Действия
+eidt: Изменить
+delete: Удалить

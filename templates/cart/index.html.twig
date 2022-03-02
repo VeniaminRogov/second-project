@@ -1,10 +1,12 @@
+{% trans_default_domain 'store' %}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Store{% endblock %}
+{% block title %}{{ 'store.cart.title'|trans }}{% endblock %}
 {% block content %}
 
             <div class="col">
-                <h1 class="h1 text-center">Your cart</h1>
+                <h1 class="h1 text-center">{{ 'store.cart.title'|trans }}</h1>
                 <div class="card">
                     <div class="card-body p-4">
 
@@ -12,13 +14,15 @@
 
                             <div class="col-lg">
                                 <h5 class="mb-3"><a href="{{ path('store_list') }}" class="text-body"><i
-                                                class="fas fa-long-arrow-alt-left me-2"></i>Continue shopping</a></h5>
+                                                class="fas fa-long-arrow-alt-left me-2"></i>{{ 'store.cart.continue'|trans }}</a></h5>
                                 <hr>
 
                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                     <div>
-                                        <p class="mb-1">Shopping cart</p>
-                                        <p class="mb-0">You have {{ count }} items in your cart</p>
+                                        <p class="mb-1">{{ 'store.cart.name'|trans }}</p>
+                                        <p class="mb-0">
+                                            {{ 'store.cart.have'|trans({'%count%': count}) }}
+                                        </p>
                                     </div>
 {#                                    <div>#}
 {#                                        <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!"#}
@@ -58,10 +62,10 @@
                                 <div class="row">
                                     <div class="col-4"></div>
                                     <div class="col-2">
-                                        <a href="{{ path('order_create') }}" class="btn btn-primary">Buy</a>
+                                        <a href="{{ path('order_create') }}" class="btn btn-primary">{{ 'store.cart.buy'|trans }}</a>
                                     </div>
                                     <div class="col-2">
-                                        <a href="{{ path('cart_remove') }}" class="btn btn-danger">Clear cart</a>
+                                        <a href="{{ path('cart_remove') }}" class="btn btn-danger">{{ 'store.cart.clear'|trans }}</a>
                                     </div>
                                     <div class="col-4"></div>
                                 </div>

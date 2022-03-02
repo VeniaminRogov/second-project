@@ -8,6 +8,7 @@ use App\Form\ProductsFormType;
 use App\Form\SortCategoryFormType;
 use App\Objects\ImportCsvObject;
 use App\Objects\SortCategoryObject;
+use App\Services\FlashService;
 use App\Services\ProductsService;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
@@ -23,6 +24,7 @@ class ProductsController extends AbstractController
         private ManagerRegistry $manager,
         private PaginatorInterface $paginator,
         private ProductsService $productsService,
+        private FlashService $flashService
     )
     {}
 
@@ -72,6 +74,7 @@ class ProductsController extends AbstractController
             $products = $form->getData();
             $image = $form->get('image')->getData();
             $products = $this->productsService->createAndUpdate($products, $image);
+            $this->flashService->onCreateUpdateProduct($id);
             return $this->redirectToRoute('manager_edit_products', [
                 'id' => $products->getId()
             ]);

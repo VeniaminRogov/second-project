@@ -3,3 +3,7 @@ login:
   email: почта
   password: пароль
   registration: регистрация
+
+registration:
+  title: Регистрация
+

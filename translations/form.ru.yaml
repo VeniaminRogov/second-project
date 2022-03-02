@@ -1,0 +1,21 @@
+form:
+  quantity: Количество
+  category: Категория
+  name: Название
+  description: Описание
+  price: Цена
+  image: Изображение
+  isActive: Есть
+  isVerified: Верифицирован
+  csv: Выберите csv файл
+  import: Импортировать
+  parent: Родительская категория
+  email: Почта
+  password: Пароль
+  user_role:
+    user: пользователь
+    manager: менеджер
+    admin: администратор
+  sort: Сортировать
+  save: Сохранить
+  add: Добавить

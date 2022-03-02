@@ -1,0 +1,19 @@
+store:
+  title: All products
+  check: Check offer
+  product:
+    title: Product page
+    price: Price
+    quantity: Quantity
+  cart:
+    title: Your cart
+    name: Cart
+    continue: Continues shopping
+    buy: Buy
+    clear: Clear cart
+    have: You have %count% products in cart
+  orders:
+    manager:
+      title: All orders
+    title: Your orders
+    no_products: You dont have any orders

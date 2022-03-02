@@ -1,9 +1,11 @@
+{% trans_default_domain 'store' %}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Store{% endblock %}
 {% block content %}
         {% if is_granted('ROLE_MANAGER') %}
-            <h1 class="h1 text-center">All orders</h1>
+            <h1 class="h1 text-center">{{ 'store.orders.manager.title'|trans }}</h1>
             <div class="row row-cols-lg-6 justify-content-center">
             {% for order in orders %}
                 {% for items in order.orderItems %}
@@ -19,7 +21,7 @@
             {% endfor %}
         {% else %}
             {% if orders %}
-                <h1 class="h1 text-center">Your orders</h1>
+                <h1 class="h1 text-center">{{ 'store.orders.title'|trans }}</h1>
                 {% for order in orders %}
                     {% if app.user == order.user %}
                         {% for items in order.orderItems %}
@@ -28,7 +30,7 @@
                                     <div class="card-body">
                                         <h5 class="card-title text-center">Order with {{ items.count }} products by {{ order.createdAt|date("Y-m-d H:i") }}</h5>
                                             <div class="text-center my-4">
-                                                <a href="{{ path('order', {id: items.orderId.id}) }}" class="btn btn-primary">Check order</a>
+                                                <a href="{{ path('order', {id: items.orderId.id}) }}" class="btn btn-primary">{{ 'store.check'|trans }}</a>
                                             </div>
                                         </div>
                                     </div>

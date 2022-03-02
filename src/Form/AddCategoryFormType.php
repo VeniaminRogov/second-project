@@ -15,14 +15,19 @@ class AddCategoryFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('save', SubmitType::class);
+            ->add('name', TextType::class,[
+                'label' => 'form.name'
+            ])
+            ->add('save', SubmitType::class, [
+                'label' => 'form.save'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Category::class
+            'data_class' => Category::class,
+            'translation_domain' => 'form'
         ]);
     }
 

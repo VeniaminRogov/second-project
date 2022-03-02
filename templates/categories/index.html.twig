@@ -1,9 +1,11 @@
+{% trans_default_domain 'admin' %}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Categories page{% endblock %}
 {% block content %}
     <h1 class="h1 text-center">
-        Categories
+        {{ 'categories'|trans }}
     </h1>
     <div style="display: none">
         {{ form(form) }}
@@ -12,9 +14,9 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Parent category</th>
-            <th scope="col">Category</th>
-            <th scope="col">Actions</th>
+            <th scope="col">{{ 'category.parent'|trans }}</th>
+            <th scope="col">{{ 'category'|trans }}</th>
+            <th scope="col">{{ 'actions'|trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -30,8 +32,8 @@
                         {{ category.name }}
                     </td>
                     <td>
-                        <a class="btn btn-primary" href="{{ path('manager_edit_category', {id: category.id}) }}">Edit</a>
-                        <a class="btn btn-danger" href="{{ path('manager_delete_category', {id: category.id}) }}">Delete</a>
+                        <a class="btn btn-primary" href="{{ path('manager_edit_category', {id: category.id}) }}">{{ 'eidt'|trans }}</a>
+                        <a class="btn btn-danger" href="{{ path('manager_delete_category', {id: category.id}) }}">{{ 'delete'|trans }}</a>
                     </td>
             {% endif %}
             </tr>

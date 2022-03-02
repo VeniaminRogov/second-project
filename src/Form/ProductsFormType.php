@@ -24,29 +24,41 @@ class ProductsFormType extends AbstractType
     {
         $builder
             ->add('category', EntityType::class, [
-                'label' => 'Category',
+                'label' => 'form.category',
                 'class' => Category::class,
                 'choice_label' => 'name',
             ])
-            ->add('name', TextType::class)
-            ->add('description', TextType::class)
-            ->add('price', IntegerType::class)
-            ->add('quantity', IntegerType::class)
+            ->add('name', TextType::class, [
+                'label' => 'form.name'
+            ])
+            ->add('description', TextType::class, [
+                'label' => 'form.description'
+            ])
+            ->add('price', IntegerType::class, [
+                'label' => 'form.price'
+            ])
+            ->add('quantity', IntegerType::class,[
+                'label' => 'form.quantity'
+            ])
             ->add('isAvailable', CheckboxType::class, [
-                'label' => 'Is active?',
+                'label' => 'form.isActive',
                 'required' => false,
             ])
             ->add('image', FileType::class, [
+                'label' => 'form.image',
                 'mapped' => false,
                 'required' => false
             ])
-            ->add('save', SubmitType::class);
+            ->add('save', SubmitType::class, [
+                'label' => 'form.add'
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Products::class
+            'data_class' => Products::class,
+            'translation_domain' => 'form'
         ]);
     }
 }

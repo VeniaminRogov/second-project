@@ -1,10 +1,12 @@
+{% trans_default_domain 'store' %}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Store{% endblock %}
 {% block pageTitle %}Products list{% endblock %}
 {% block content %}
     <h1 class="text-center mt-1">
-        Product list
+        {{ 'store.title'|trans }}
     </h1>
     <div class="container">
 
@@ -27,7 +29,7 @@
                                 </div>
                                 <h5 class="card-title">{{ product.name }}</h5>
                                 <div class="text-center my-4">
-                                    <a href="{{ path('store_product', {slug: product.category.slug, name: product.name}) }}" class="btn btn-primary">Check offer</a>
+                                    <a href="{{ path('store_product', {slug: product.category.slug, name: product.name}) }}" class="btn btn-primary">{{ 'store.check'|trans }}</a>
                                 </div>
                             </div>
                         </div>

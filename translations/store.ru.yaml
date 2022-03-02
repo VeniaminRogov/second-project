@@ -1,0 +1,19 @@
+store:
+  title: Список продуктов
+  check: Проверить заказ
+  product:
+    title: Страница продукта
+    price: Цена
+    quantity: Количество
+  cart:
+    title: Ваша корзина
+    name: Корзина
+    continue: Продолжить покупки
+    buy: Купить
+    clear: Очистить корзину
+    have: Вы имеете %count% товаров в вашей корзине
+  orders:
+    manager:
+      title: Все заказы
+    title: Ваши заказы
+    no_products: У вас нет заказов

@@ -7,6 +7,7 @@ use App\Entity\Products;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -35,7 +36,6 @@ class ProductsService
 
     public function createAndUpdate(Products $products, $image): Products
     {
-
         $products->setImage($this->uploadsImage($products, $image));
 
         $products->setIsAvailable(true);
@@ -45,10 +45,8 @@ class ProductsService
             $products->setIsAvailable(false);
         }
 
-
         $this->doctrine->persist($products);
         $this->doctrine->flush();
-
 
         return $products;
     }
