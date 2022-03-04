@@ -29,7 +29,7 @@
                                 </div>
                                 <h5 class="card-title">{{ product.name }}</h5>
                                 <div class="text-center my-4">
-                                    <a href="{{ path('store_product', {slug: product.category.slug, name: product.name}) }}" class="btn btn-primary">{{ 'store.check'|trans }}</a>
+                                    <a href="{{ path('store_product', {slug: product.category.slug, id: product.id}) }}" class="btn btn-primary">{{ 'store.check'|trans }}</a>
                                 </div>
                             </div>
                         </div>

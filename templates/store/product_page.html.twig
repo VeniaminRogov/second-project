@@ -4,9 +4,7 @@
 
 {% block title %}Product{% endblock %}
 
-
 {% block content %}
-
         <div class="d-flex flex-column min-vh-100">
             <h1 class="text-center mt-1">
                 {{ 'store.product.title'|trans }}
@@ -42,7 +40,7 @@
             </div>
             <div class="row row-cols-md-auto justify-content-center flex-nowrap mt-auto">
                 {% for categoryProduct in category_products %}
-                    <a class="card shadow-sm m-sm-3" href="{{ path('store_product', {slug: categoryProduct.category.slug, name: categoryProduct.name}) }}">
+                    <a class="card shadow-sm m-sm-3" href="{{ path('store_product', {slug: categoryProduct.category.slug, id: categoryProduct.id}) }}">
                         {% if categoryProduct.image == null %}
 
                         {% else %}

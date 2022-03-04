@@ -10,6 +10,7 @@ use App\Objects\ImportCsvObject;
 use App\Objects\SortCategoryObject;
 use App\Services\FlashService;
 use App\Services\ProductsService;
+use App\Services\RedisService;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,7 +25,7 @@ class ProductsController extends AbstractController
         private ManagerRegistry $manager,
         private PaginatorInterface $paginator,
         private ProductsService $productsService,
-        private FlashService $flashService
+        private FlashService $flashService,
     )
     {}
 
@@ -33,7 +34,7 @@ class ProductsController extends AbstractController
         $sortObject = new SortCategoryObject();
         $form = $this->createForm(SortCategoryFormType::class, $sortObject);
 
-    $form->handleRequest($request);
+        $form->handleRequest($request);
 
         $productsByCategories = $this->manager->getRepository(Products::class)->sortByCategories($sortObject);
         $products = $this->manager->getRepository(Products::class)->findAll();

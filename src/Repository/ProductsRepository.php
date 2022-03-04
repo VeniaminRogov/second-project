@@ -49,7 +49,7 @@ class ProductsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getRandomEntitiesBySlug(int $count, string $slug, Products $product)
+    public function getRandomEntitiesBySlug(int $count, string $slug, int $productId)
     {
         return $this->createQueryBuilder('products')
             ->addSelect('RAND() as HIDDEN rand')
@@ -59,7 +59,7 @@ class ProductsRepository extends ServiceEntityRepository
             ->andWhere('category.Slug = :slug')
             ->setParameter('slug', $slug)
             ->andWhere('products.id != :id')
-            ->setParameter('id', $product->getId())
+            ->setParameter('id', $productId)
             ->getQuery()
             ->getResult();
     }

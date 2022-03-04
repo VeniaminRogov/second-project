@@ -31,3 +31,5 @@ services:
             $projectDir: '%kernel.project_dir%'
     App\EventSubscriber\LocaleSubscriber:
         arguments: [ '%kernel.default_locale%' ]
+    App\Services\RedisService:
+        arguments: ['%env(REDIS_DSN)%']

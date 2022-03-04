@@ -83,7 +83,7 @@ store_product_category:
     controller: App\Controller\StoreController::index
 
 store_product:
-    path: /store/{slug}/{name}
+    path: /store/{slug}/{id<\d+>}
     controller: App\Controller\StoreController::productPage
 
 #Cart Routes
@@ -93,7 +93,7 @@ cart:
     controller: App\Controller\OrdersController::cart
 
 cart_remove:
-    path: /cart/remove/{id?}
+    path: /cart/remove/{id<\d+>?}
     controller: App\Controller\OrdersController::deleteFromCart
 
 

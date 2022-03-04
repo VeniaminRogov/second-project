@@ -7,8 +7,10 @@ use App\Entity\Products;
 use App\Form\AddToCartFormType;
 use App\Model\CartModel;
 use App\Objects\AddToCartObject;
+use App\Objects\ProductDTO;
 use App\Services\CategoriesService;
 use App\Services\ProductsService;
+use App\Services\RedisService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,13 +25,14 @@ class StoreController extends AbstractController
         private ProductsService   $productsService,
         private CategoriesService $categoriesService,
         private CartModel         $cartService,
+        private RedisService      $redisService,
+        private ProductDTO        $DTO,
     )
     {}
 
     public function index(?string $slug): Response
     {
         $products = $this->doctrine->getRepository(Products::class)->findAll();
-
 
         if($slug)
         {
@@ -47,24 +50,23 @@ class StoreController extends AbstractController
     }
 
 
-    public function productPage(?string $name, ?string $slug = null, Request $request): Response
+    public function productPage(?int $id, ?string $slug = null, Request $request): Response
     {
-        $product = $this->doctrine->getRepository(Products::class)->findOneBy(['name' => $name]);
-        $productId = $product->getId();
+        $product = $this->redisService->cacheProduct($id);
 
-        $randProducts = $this->doctrine->getRepository(Products::class)->getRandomEntitiesBySlug(4, $slug, $product);
+        $randProducts = $this->doctrine->getRepository(Products::class)->getRandomEntitiesBySlug(4, $slug, $product->id);
+
+
 
 
         $addToCart = new AddToCartObject();
         $form = $this->createForm(AddToCartFormType::class, $addToCart);
         $form->handleRequest($request);
 
-
-
         if ($form->isSubmitted())
         {
             $quantity = $form->get('quantity')->getData();
-            $this->cartService->addToCart($productId, $quantity);
+            $this->cartService->addToCart($product->id, $quantity);
         }
 
         return $this->render('store/product_page.html.twig', [
