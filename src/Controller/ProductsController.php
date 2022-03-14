@@ -17,6 +17,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProductsController extends AbstractController
 {
@@ -25,9 +26,9 @@ class ProductsController extends AbstractController
         private ManagerRegistry $manager,
         private PaginatorInterface $paginator,
         private ProductsService $productsService,
-        private FlashService $flashService,
-    )
-    {}
+        private TranslatorInterface $translator,
+    ) {
+    }
 
     public function index(Request $request): Response
     {
@@ -39,8 +40,7 @@ class ProductsController extends AbstractController
         $productsByCategories = $this->manager->getRepository(Products::class)->sortByCategories($sortObject);
         $products = $this->manager->getRepository(Products::class)->findAll();
 
-        if ($form->isSubmitted())
-        {
+        if ($form->isSubmitted()) {
             $pagination = $this->paginator->paginate(
                 $productsByCategories,
                 $sortObject->getPage(),
@@ -66,38 +66,29 @@ class ProductsController extends AbstractController
 
     public function createAndUpdate(Request $request, ?int $id): Response
     {
-        $products = $this->productsService->checkProductId($id);
+        $products = $this->productsService->getProductById($id);
 
         $form = $this->createForm(ProductsFormType::class, $products);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $products = $form->getData();
             $image = $form->get('image')->getData();
-            $products = $this->productsService->createAndUpdate($products, $image);
-            $this->flashService->onCreateUpdateProduct($id);
+            $products = $this->productsService->createAndUpdate($id, $products, $image);
             return $this->redirectToRoute('manager_edit_products', [
-                'id' => $products->getId()
+                'id' => $products->getId(),
             ]);
         }
-        $importCsv = $this->createForm(ImportScvFormType::class);
-        $importCsv->handleRequest($request);
-        if($importCsv->isSubmitted())
-        {
-            $csv = $importCsv->get('csv')->getData();
-            $csvData = $this->productsService->importFromCsv($csv);
-        }
 
-        return $this->renderForm('products/form_products.html.twig', [
-            'form' => $form,
-            'csvForm' => $importCsv
+        return $this->render('products/form_products.html.twig', [
+            'form' => $form->createView(),
+            'title' => $id ? $this->translator->trans('products.title.update', [], 'admin') :  $this->translator->trans('products.title.create', [], 'admin')
         ]);
     }
 
 
     public function delete(int $id): RedirectResponse
     {
-        $products = $this->productsService->checkProductId($id);
+        $products = $this->productsService->getProductById($id);
         $this->productsService->delete($products);
 
         return $this->redirectToRoute('manager_products_list');

@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CategoriesController extends AbstractController
 {
@@ -22,6 +23,7 @@ class CategoriesController extends AbstractController
         private ManagerRegistry $manager,
         private PaginatorInterface $paginator,
         private CategoriesService $service,
+        private TranslatorInterface $translator,
     )
     {}
 
@@ -49,8 +51,6 @@ class CategoriesController extends AbstractController
     {
         $category = $this->service->checkCategoryId($id);
 
-
-
         $form = $this->createForm(CategoriesFormType::class, $category);
         $form->handleRequest($request);
 
@@ -75,9 +75,10 @@ class CategoriesController extends AbstractController
             ]);
         }
 
-        return $this->renderForm('categories/form_categories.html.twig', [
-            'form' => $form,
-            'addForm' => $formAdd
+        return $this->render('categories/form_categories.html.twig', [
+            'form' => $form->createView(),
+            'addForm' => $formAdd->createView(),
+            'title' => $id ? $this->translator->trans('category.title.update', [], 'admin') : $this->translator->trans('category.title.create', [], 'admin')
         ]);
     }
 

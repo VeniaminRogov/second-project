@@ -1,0 +1,14 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    404 not found
+{% endblock %}
+
+{% block content %}
+    <h1 class="text-center">Page not found</h1>
+    <p class="text-center">
+        The requested page couldn't be located. Checkout for any URL
+        misspelling or <a href="{{ path('store_list') }}">return to the store list</a>.
+    </p>
+{% endblock %}

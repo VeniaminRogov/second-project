@@ -1,11 +1,13 @@
 products:
   title:
     create: Create product
+    update: Update product
     all: All products
 category:
   name: Category
   title:
     create: Create category
+    update: Update category
     new: New category
     new_parent: New parent category
   parent: Parent category
@@ -13,6 +15,7 @@ categories: Categories
 users:
   title:
     new: Create user
+    update: Update user
     all: All users
   email: Email
   role: Role

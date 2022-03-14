@@ -8,6 +8,8 @@ services:
       - MYSQL_ROOT_PASSWORD=2231
     volumes:
       - mysql-storage:/var/lib/mysql
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
 
   redis:
     container_name: redis

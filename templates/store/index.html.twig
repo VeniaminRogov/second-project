@@ -2,12 +2,9 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Store{% endblock %}
-{% block pageTitle %}Products list{% endblock %}
+{% block title %}{{ 'store.title'|trans }}{% endblock %}
+{% block pageTitle %}{{ 'store.title'|trans }}{% endblock %}
 {% block content %}
-    <h1 class="text-center mt-1">
-        {{ 'store.title'|trans }}
-    </h1>
     <div class="container">
 
             <div class="row row-cols-lg-6 g-lg-5 justify-content-center">

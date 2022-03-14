@@ -34,7 +34,6 @@ class ProductsRepository extends ServiceEntityRepository
             $req->andWhere('pc.id = :category')
                 ->setParameter('category', $data->getCategory());
         }
-//        dd($req->getQuery()->getArrayResult());
         return $req->getQuery()->getResult();
     }
 

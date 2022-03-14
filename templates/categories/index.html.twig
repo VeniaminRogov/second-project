@@ -2,11 +2,9 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Categories page{% endblock %}
+{% block title %}{{ "categories"|trans }}{% endblock %}
+{% block pageTitle %}{{ 'categories'|trans }}{% endblock %}
 {% block content %}
-    <h1 class="h1 text-center">
-        {{ 'categories'|trans }}
-    </h1>
     <div style="display: none">
         {{ form(form) }}
     </div>
@@ -15,7 +13,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">{{ 'category.parent'|trans }}</th>
-            <th scope="col">{{ 'category'|trans }}</th>
+            <th scope="col">{{ 'category.name'|trans }}</th>
             <th scope="col">{{ 'actions'|trans }}</th>
         </tr>
         </thead>

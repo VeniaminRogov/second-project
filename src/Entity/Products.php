@@ -43,7 +43,7 @@ class Products
     #[Gedmo\Timestampable()]
     private $updatedAt;
 
-    #[ORM\ManyToOne(targetEntity: Category::class, cascade: ['persist'], inversedBy: 'products')]
+    #[ORM\ManyToOne(targetEntity: Category::class, cascade: ['persist', 'remove'], inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     private $category;
 

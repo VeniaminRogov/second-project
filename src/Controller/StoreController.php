@@ -16,10 +16,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class StoreController extends AbstractController
 {
+    private $session;
     public function __construct(
         private ManagerRegistry   $doctrine,
         private ProductsService   $productsService,
@@ -27,16 +28,22 @@ class StoreController extends AbstractController
         private CartModel         $cartService,
         private RedisService      $redisService,
         private ProductDTO        $DTO,
-    )
-    {}
+        private RequestStack      $requestStack
+    ) {
+        $this->session = $requestStack->getSession();
+    }
 
     public function index(?string $slug): Response
     {
         $products = $this->doctrine->getRepository(Products::class)->findAll();
 
-        if($slug)
-        {
+        if ($slug) {
             $categoryBySlug = $this->doctrine->getRepository(Category::class)->findBySlug($slug);
+
+            if (!$categoryBySlug) {
+                throw new NotFoundHttpException('');
+            }
+
             $categoryProduct = $categoryBySlug->getProducts();
 
             return $this->render('store/index.html.twig', [
@@ -45,7 +52,7 @@ class StoreController extends AbstractController
         }
 
         return $this->render('store/index.html.twig', [
-           'products' => $products,
+            'products' => $products,
         ]);
     }
 
@@ -53,18 +60,17 @@ class StoreController extends AbstractController
     public function productPage(?int $id, ?string $slug = null, Request $request): Response
     {
         $product = $this->redisService->cacheProduct($id);
-
+        if (!$product) {
+            throw new NotFoundHttpException('', null, 404);
+        }
         $randProducts = $this->doctrine->getRepository(Products::class)->getRandomEntitiesBySlug(4, $slug, $product->id);
 
-
-
-
         $addToCart = new AddToCartObject();
+
         $form = $this->createForm(AddToCartFormType::class, $addToCart);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted())
-        {
+        if ($form->isSubmitted()) {
             $quantity = $form->get('quantity')->getData();
             $this->cartService->addToCart($product->id, $quantity);
         }

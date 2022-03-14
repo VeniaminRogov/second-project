@@ -17,7 +17,9 @@
                 {% endif %}
                 <div class="content container-fluid h-100">
                     <div class="row d-flex justify-content-center align-items-center h-100 overflow-hidden">
-
+                        <h1 class="text-center">
+                            {% block pageTitle %}{% endblock %}
+                        </h1>
                         {% block content %}
                         {% endblock %}
                         {% include('flash/flash.html.twig') %}

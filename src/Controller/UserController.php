@@ -13,7 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserController extends AbstractController
 {
@@ -21,6 +23,7 @@ class UserController extends AbstractController
         private ManagerRegistry $manager,
         private PaginatorInterface $paginator,
         private UserService $userService,
+        private TranslatorInterface $translator,
     )
     {}
 
@@ -55,7 +58,7 @@ class UserController extends AbstractController
 
         return $this->render('admin/index.html.twig',[
             'sortForm' => $form->createView(),
-            'users' => $pagination
+            'users' => $pagination,
         ]);
     }
 
@@ -77,6 +80,7 @@ class UserController extends AbstractController
 
         return $this->renderForm('admin/form_user.html.twig', [
             'form' => $form,
+            'title' => $id ? $this->translator->trans('users.title.update', [], 'admin') : $this->translator->trans('users.title.new', [], 'admin')
         ]);
     }
 

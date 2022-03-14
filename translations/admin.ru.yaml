@@ -1,11 +1,13 @@
 products:
   title:
     create: Создать продукт
+    update: Изменить продукт
     all: Список продуктов
 category:
   name: Ктегория
   title:
     create: Создать категорию
+    update: Изменить категорию
     new: Новая категория
     new_parent: Новая подкатегория
   parent: Родительская категория
@@ -13,6 +15,7 @@ categories: Категории
 users:
   title:
     new: Создать пользователя
+    update: Изменить пользователя
     all: Список пользователей
   email: Почта
   role: Роль

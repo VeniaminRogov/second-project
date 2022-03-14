@@ -1,8 +1,8 @@
 {% trans_default_domain 'login' %}
 {% extends 'base.html.twig' %}
 
-{% block title %}Login page{% endblock %}
-{% block pageTitle %}Login{% endblock %}
+{% block title %}{{ "login.title"|trans }}{% endblock %}
+{% block pageTitle %}{{ "login.login"|trans }}{% endblock %}
 {% block sidebar %}
 {% endblock %}
 {% block content %}
@@ -10,10 +10,7 @@
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
-
         <div class="row">
-
-            <h1 class="h1 text-center">{{ 'login.login'|trans|capitalize }}</h1>
             <div class="col-2"></div>
             <div class="col">
                 {% if error %}

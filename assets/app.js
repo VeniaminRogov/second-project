@@ -49,7 +49,6 @@ if (sortUsers)
 }
 
 $(document).ready(function(){
-    // Cookies.remove('lang');
     $('option[value='+Cookies.get('lang')+']').attr('selected', 'selected');
     $("select.language").change(function(){
         let lang = $(this).children("option:selected").val();
@@ -57,4 +56,5 @@ $(document).ready(function(){
         Cookies.set('lang', lang);
         location.reload();
     });
+    $('.notice').fadeIn(1000);
 });

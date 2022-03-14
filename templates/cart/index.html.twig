@@ -3,76 +3,71 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{ 'store.cart.title'|trans }}{% endblock %}
+{% block pageTitle %}{{ 'store.cart.title'|trans }}{% endblock %}
 {% block content %}
+    <div class="col">
+        <div class="card">
+            <div class="card-body p-4">
 
-            <div class="col">
-                <h1 class="h1 text-center">{{ 'store.cart.title'|trans }}</h1>
-                <div class="card">
-                    <div class="card-body p-4">
+                <div class="row">
 
-                        <div class="row">
+                    <div class="col-lg">
+                        <h5 class="mb-3"><a href="{{ path('store_list') }}" class="text-body"><i
+                                        class="fas fa-long-arrow-alt-left me-2"></i>{{ 'store.cart.continue'|trans }}</a></h5>
+                        <hr>
 
-                            <div class="col-lg">
-                                <h5 class="mb-3"><a href="{{ path('store_list') }}" class="text-body"><i
-                                                class="fas fa-long-arrow-alt-left me-2"></i>{{ 'store.cart.continue'|trans }}</a></h5>
-                                <hr>
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <p class="mb-1">{{ 'store.cart.name'|trans }}</p>
+                                <p class="mb-0">
+                                    {{ 'store.cart.have'|trans({'%count%': count}) }}
+                                </p>
+                            </div>
+                        </div>
+                        {% for product in products %}
 
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <div>
-                                        <p class="mb-1">{{ 'store.cart.name'|trans }}</p>
-                                        <p class="mb-0">
-                                            {{ 'store.cart.have'|trans({'%count%': count}) }}
-                                        </p>
-                                    </div>
-{#                                    <div>#}
-{#                                        <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!"#}
-{#                                                                                                    class="text-body">price <i class="fas fa-angle-down mt-1"></i></a></p>#}
-{#                                    </div>#}
-                                </div>
-                                {% for product in products %}
-
-                                    <div class="card mb-3">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between">
-                                                <div class="d-flex flex-row align-items-center">
-                                                    <div>
-                                                        <img src="{{ (image_url ~ product.image) | imagine_filter('medium_thumb') }}" alt="No found avatar">
-                                                    </div>
-                                                    <div class="ms-3">
-                                                        <h5 class="h5">{{ product.name }}</h5>
-                                                        <p class="small mb-0">{{ product.description }}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex flex-row align-items-center">
-                                                    <div style="width: 50px;">
-                                                        <h5 class="fw-normal mb-0">{{ product.quantity }}</h5>
-                                                    </div>
-                                                    <div style="width: 80px;">
-                                                        <h5 class="mb-0">{{ product.price }}€</h5>
-                                                    </div>
-                                                    <a href="{{ path('cart_remove', {id: product.id}) }}" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
-                                                </div>
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="d-flex flex-row align-items-center">
+                                            <div>
+                                                <img src="{{ (image_url ~ product.image) | imagine_filter('medium_thumb') }}" alt="No found avatar">
+                                            </div>
+                                            <div class="ms-3">
+                                                <h5 class="h5">{{ product.name }}</h5>
+                                                <p class="small mb-0">{{ product.description }}</p>
                                             </div>
                                         </div>
+                                        <div class="d-flex flex-row align-items-center">
+                                            <div style="width: 50px;">
+                                                <h5 class="fw-normal mb-0">{{ product.quantity }}</h5>
+                                            </div>
+                                            <div style="width: 80px;">
+                                                <h5 class="mb-0">{{ product.price }}€</h5>
+                                            </div>
+                                            <a href="{{ path('cart_remove', {id: product.id}) }}" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
+                                        </div>
                                     </div>
-                                {% endfor %}
-
-                            </div>
-                            {% if products %}
-                                <div class="row">
-                                    <div class="col-4"></div>
-                                    <div class="col-2">
-                                        <a href="{{ path('order_create') }}" class="btn btn-primary">{{ 'store.cart.buy'|trans }}</a>
-                                    </div>
-                                    <div class="col-2">
-                                        <a href="{{ path('cart_remove') }}" class="btn btn-danger">{{ 'store.cart.clear'|trans }}</a>
-                                    </div>
-                                    <div class="col-4"></div>
                                 </div>
-                            {% endif %}
-                        </div>
+                            </div>
+                        {% endfor %}
+
                     </div>
+                    {% if products %}
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-2">
+                                <a href="{{ path('order_create') }}" class="btn btn-primary">{{ 'store.cart.buy'|trans }}</a>
+                            </div>
+                            <div class="col-2">
+                                <a href="{{ path('cart_remove') }}" class="btn btn-danger">{{ 'store.cart.clear'|trans }}</a>
+                            </div>
+                            <div class="col-4"></div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
+        </div>
+    </div>
 
 {% endblock %}

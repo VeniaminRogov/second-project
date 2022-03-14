@@ -2,15 +2,11 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Products page{% endblock %}
-
+{% block title %}{{ title }}{% endblock %}
+{% block pageTitle %}
+    {{ title }}
+{% endblock %}
 {% block content %}
-    <h1 class="h1 text-center">
-        {{ 'products.title.create'|trans }}
-    </h1>
-    <div>
-        {{ form(csvForm) }}
-    </div>
     <div class="form">
         {{ form_start(form) }}
         {{ form_end(form) }}

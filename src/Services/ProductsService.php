@@ -7,7 +7,6 @@ use App\Entity\Products;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -21,12 +20,13 @@ class ProductsService
         private $targetDirectory,
         private SluggerInterface $slugger,
         private $projectDir,
+        private FlashService $flashService
     )
     {
         $this->doctrine = $doctrine->getManager();
     }
 
-    public function checkProductId(?int $id = null)
+    public function getProductById(?int $id = null)
     {
         if(!$id){
             return $id;
@@ -34,8 +34,9 @@ class ProductsService
         return $this->doctrine->getRepository(Products::class)->find($id);
     }
 
-    public function createAndUpdate(Products $products, $image): Products
+    public function createAndUpdate(?int $id, Products $products, $image): Products
     {
+        $this->flashService->onCreateUpdateProduct($id);
         $products->setImage($this->uploadsImage($products, $image));
 
         $products->setIsAvailable(true);
@@ -60,7 +61,6 @@ class ProductsService
         if($image == null){
             return $products->getImage();
         }
-
         try {
             unlink($this->getTargetDirectory().''.$products->getImage());
         } catch (\Exception $e){}
@@ -68,11 +68,9 @@ class ProductsService
         $originalFileName = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFileName = $this->slugger->slug($originalFileName);
         $fileName = $safeFileName.'-'.uniqid().'.'.$image->guessExtension();
-
         try {
             $image->move($this->getTargetDirectory(), $fileName);
         } catch (FileException $e){
-
         }
 
         return $fileName;
@@ -82,7 +80,7 @@ class ProductsService
     {
         $this->doctrine->remove($products);
         $this->doctrine->flush();
-
+        $this->flashService->onDeleteProduct();
         return true;
     }
 

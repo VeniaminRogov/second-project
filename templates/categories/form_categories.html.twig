@@ -2,18 +2,10 @@
 
 {% extends './base.html.twig' %}
 
-{% block title %}Add category{% endblock %}
-
+{% block title %}{{ title }}{% endblock %}
+{% block pageTitle %}{{ title }}{% endblock %}
 {% block content %}
-    <h1 class="h1 text-center">
-        {{ 'category.title.create'|trans }}
-    </h1>
-    <div>
-        <h2 class="h2 text-center">{{ 'category.title.new'|trans }}</h2>
-        {{ form(addForm) }}
-    </div>
     <div class="form">
-        <h2 class="h2 text-center">{{ 'category.title.new_parent'|trans }}</h2>
         {{ form(form) }}
     </div>
 

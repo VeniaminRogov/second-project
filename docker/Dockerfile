@@ -6,13 +6,16 @@ RUN apt-get update && apt-get install -y \
     libxml2-dev \
     libzip-dev \
     librabbitmq-dev \
+    libjpeg-dev \
     libpng-dev \
+    libwebp-dev \
     && docker-php-ext-install \
     pdo_mysql \
     zip \
-    gd \
     && pecl install amqp \
-    && docker-php-ext-enable amqp 
+    && docker-php-ext-enable amqp \
+    && docker-php-ext-configure gd --with-jpeg --with-webp \
+    && docker-php-ext-install gd
 
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 

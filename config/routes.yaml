@@ -79,7 +79,7 @@ store_list:
     controller: App\Controller\StoreController::index
 
 store_product_category:
-    path: /store/{slug}
+    path: /store/{slug?}
     controller: App\Controller\StoreController::index
 
 store_product:

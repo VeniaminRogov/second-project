@@ -1,3 +1,4 @@
 product:
   create: Product added
   update: Product updated
+  delete: Delete product

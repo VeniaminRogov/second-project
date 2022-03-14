@@ -2,10 +2,16 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Store{% endblock %}
+{% block title %}{{ "store.orders.title"|trans }}{% endblock %}
+{% block pageTitle %}
+    {% if is_granted('ROLE_MANAGER') %}
+        {{ 'store.orders.manager.title'|trans }}
+    {% else %}
+        {{ 'store.orders.title'|trans }}
+    {% endif %}
+{% endblock %}
 {% block content %}
         {% if is_granted('ROLE_MANAGER') %}
-            <h1 class="h1 text-center">{{ 'store.orders.manager.title'|trans }}</h1>
             <div class="row row-cols-lg-6 justify-content-center">
             {% for order in orders %}
                 {% for items in order.orderItems %}
@@ -21,7 +27,7 @@
             {% endfor %}
         {% else %}
             {% if orders %}
-                <h1 class="h1 text-center">{{ 'store.orders.title'|trans }}</h1>
+                <h1 class="h1 text-center"></h1>
                 {% for order in orders %}
                     {% if app.user == order.user %}
                         {% for items in order.orderItems %}

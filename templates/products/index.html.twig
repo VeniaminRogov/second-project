@@ -2,11 +2,9 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Products page{% endblock %}
+{% block title %}{{ 'products.title.all'|trans }}{% endblock %}
+{% block pageTitle %}{{ 'products.title.all'|trans }}{% endblock %}
 {% block content %}
-    <h1 class="h1 text-center">
-        {{ 'products.title.all'|trans }}
-    </h1>
     <div class="mb-5">
         {{ form(sortForm) }}
     </div>

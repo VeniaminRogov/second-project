@@ -2,12 +2,9 @@
 
 {% extends './base.html.twig' %}
 
-{% block title %}Add user{% endblock %}
-
+{% block title %}{{ title }}{% endblock %}
+{% block pageTitle %}{{ title }}{% endblock %}
 {% block content %}
-    <h1 class="h1 text-center">
-        {{ 'users.title.new'|trans }}
-    </h1>
     <div class="form d-flex justify-content-between">
         {{ form_start(form) }}
             {{ form_row(form.email) }}

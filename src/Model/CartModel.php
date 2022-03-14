@@ -3,7 +3,6 @@
 namespace App\Model;
 
 use App\Objects\AddToCartObject;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
