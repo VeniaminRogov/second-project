@@ -44,15 +44,11 @@ class Products
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: Category::class, cascade: ['persist', 'remove'], inversedBy: 'products')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: "category_id", referencedColumnName: 'id', onDelete: "SET NULL")]
     private $category;
 
     #[ORM\ManyToOne(targetEntity: OrderItems::class, inversedBy: 'product')]
     private $orderItems;
-
-//    #[ORM\ManyToOne(targetEntity: OrderItems::class, cascade: ['persist'], inversedBy: 'products')]
-//    #[ORM\JoinColumn(nullable: true)]
-//    private $orderItems;
 
 
     public function getId(): ?int
