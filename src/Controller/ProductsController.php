@@ -8,9 +8,7 @@ use App\Form\ProductsFormType;
 use App\Form\SortCategoryFormType;
 use App\Objects\ImportCsvObject;
 use App\Objects\SortCategoryObject;
-use App\Services\FlashService;
 use App\Services\ProductsService;
-use App\Services\RedisService;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -84,7 +82,6 @@ class ProductsController extends AbstractController
             'title' => $id ? $this->translator->trans('products.title.update', [], 'admin') :  $this->translator->trans('products.title.create', [], 'admin')
         ]);
     }
-
 
     public function delete(int $id): RedirectResponse
     {

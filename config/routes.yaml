@@ -109,3 +109,19 @@ order:
 order_create:
     path: cart/order/create
     controller: App\Controller\OrdersController::createOrder
+
+#API
+index:
+    path: api/products
+    controller: App\Controller\API\ProductController::index
+    methods: GET
+
+show:
+    path: api/products/{id<\d+>}
+    controller: App\Controller\API\ProductController::show
+    methods: GET
+
+add:
+    path: api/products/
+    controller: App\Controller\API\ProductController::add
+    methods: POST

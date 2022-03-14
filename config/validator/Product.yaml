@@ -1,0 +1,8 @@
+App\Entity\Products:
+  properties:
+    name:
+      - NotBlank: ~
+    price:
+      - NotBlank: ~
+    quantity:
+      - NotBlank: ~

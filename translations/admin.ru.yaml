@@ -3,6 +3,9 @@ products:
     create: Создать продукт
     update: Изменить продукт
     all: Список продуктов
+  status:
+    create: Продукт добавлен
+    not_found: Продукт не найден
 category:
   name: Ктегория
   title:

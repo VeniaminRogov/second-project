@@ -3,6 +3,9 @@ products:
     create: Create product
     update: Update product
     all: All products
+  status:
+    create: Product created
+    not_found: Product not found
 category:
   name: Category
   title:
