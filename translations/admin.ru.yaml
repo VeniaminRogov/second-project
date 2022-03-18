@@ -6,6 +6,8 @@ products:
   status:
     create: Продукт добавлен
     not_found: Продукт не найден
+    delete: Продукт удален
+    update: Продукт обнавлен
 category:
   name: Ктегория
   title:

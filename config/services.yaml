@@ -30,6 +30,16 @@ services:
         arguments:
             $targetDirectory: '%images_directory%'
             $projectDir: '%kernel.project_dir%'
+    App\Services\UploadFileService:
+        arguments:
+            $targetDirectory: '%images_directory%'
+
+    App\Services\ImagineService:
+        arguments:
+            - '@liip_imagine.service.filter'
+
+
+
     App\EventSubscriber\LocaleSubscriber:
         arguments: [ '%kernel.default_locale%' ]
     App\Services\RedisService:

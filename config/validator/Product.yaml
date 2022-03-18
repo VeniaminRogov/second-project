@@ -1,4 +1,4 @@
-App\Entity\Products:
+App\Objects\ProductDTO:
   properties:
     name:
       - NotBlank: ~

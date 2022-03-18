@@ -6,8 +6,12 @@ products:
   status:
     create: Product created
     not_found: Product not found
+    delete: Product deleted
+    update: Product updated
 category:
   name: Category
+  status:
+    not_found: Category not found
   title:
     create: Create category
     update: Update category

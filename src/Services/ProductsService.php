@@ -36,7 +36,6 @@ class ProductsService
 
     public function createAndUpdate(?int $id, Products $products, $image): Products
     {
-        $this->flashService->onCreateUpdateProduct($id);
         $products->setImage($this->uploadsImage($products, $image));
 
         $products->setIsAvailable(true);
@@ -49,11 +48,25 @@ class ProductsService
         $this->doctrine->persist($products);
         $this->doctrine->flush();
 
+        $this->flashService->onCreateUpdateProduct($id);
+
         return $products;
     }
 
     private function getTargetDirectory(){
         return $this->targetDirectory;
+    }
+
+    public function delete(Products $products): bool
+    {
+        $this->doctrine->remove($products);
+        $this->doctrine->flush();
+        $this->flashService->onDeleteProduct();
+        return true;
+    }
+
+    private function getProjectDir(){
+        return $this->projectDir;
     }
 
     private function uploadsImage(Products $products, ?UploadedFile $image): ?string
@@ -74,18 +87,6 @@ class ProductsService
         }
 
         return $fileName;
-    }
-
-    public function delete(Products $products): bool
-    {
-        $this->doctrine->remove($products);
-        $this->doctrine->flush();
-        $this->flashService->onDeleteProduct();
-        return true;
-    }
-
-    private function getProjectDir(){
-        return $this->projectDir;
     }
 
     public function importFromCsv(?UploadedFile $csv)

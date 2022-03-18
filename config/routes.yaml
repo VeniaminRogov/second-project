@@ -52,10 +52,14 @@ manager_add_products:
 manager_edit_products:
     path: /manager/products/edit/{id<\d+>}
     controller: App\Controller\ProductsController::createAndUpdate
+    options:
+        expose: true
 
 manager_delete_products:
     path: /manager/products/delete/{id<\d+>}
     controller: App\Controller\ProductsController::delete
+    options:
+        expose: true
 
 manager_list_category:
     path: /manager/category/list
@@ -115,13 +119,37 @@ index:
     path: api/products
     controller: App\Controller\API\ProductController::index
     methods: GET
+    options:
+        expose: true
 
 show:
     path: api/products/{id<\d+>}
     controller: App\Controller\API\ProductController::show
     methods: GET
+    options:
+        expose: true
 
 add:
-    path: api/products/
+    path: api/products
     controller: App\Controller\API\ProductController::add
     methods: POST
+    options:
+        expose: true
+
+edit:
+    path: api/products/{id<\d+>}
+    controller: App\Controller\API\ProductController::edit
+    methods: PUT
+
+delete:
+    path: api/products/{id<\d+>}
+    controller: App\Controller\API\ProductController::delete
+    methods: DELETE
+
+create:
+    path: api/images
+    controller: App\Controller\API\ImageController::create
+    methods: POST
+    options:
+        expose: true
+

@@ -26,7 +26,7 @@ class Products
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $image;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'integer', length: 255)]
     private $quantity;
 
     #[ORM\Column(type: 'boolean')]
@@ -43,7 +43,7 @@ class Products
     #[Gedmo\Timestampable()]
     private $updatedAt;
 
-    #[ORM\ManyToOne(targetEntity: Category::class, cascade: ['persist', 'remove'], inversedBy: 'products')]
+    #[ORM\ManyToOne(targetEntity: Category::class, cascade: ['persist'], inversedBy: 'products')]
     #[ORM\JoinColumn(name: "category_id", referencedColumnName: 'id', onDelete: "SET NULL")]
     private $category;
 

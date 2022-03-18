@@ -9,6 +9,17 @@
 {% block content %}
     <div class="form">
         {{ form_start(form) }}
+            {{ form_row(form.category) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.price) }}
+            {{ form_row(form.quantity) }}
+            {{ form_row(form.isAvailable) }}
+            <div>
+                <img src="{{ img }}" alt="">
+                {{ form_row(form.image) }}
+            </div>
+            {{ form_row(form.save) }}
         {{ form_end(form) }}
     </div>
 {% endblock %}

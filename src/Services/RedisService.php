@@ -21,7 +21,7 @@ class RedisService
 
     public function getCacheProduct(ProductDTO $productDTO): ProductDTO
     {
-        $productDTO->getProduct($this->client->get(ProductDTO::PREFIX.$productDTO->id));
+        $productDTO->getCacheProduct($this->client->get(ProductDTO::PREFIX.$productDTO->id));
 
         return $productDTO;
     }
@@ -30,7 +30,7 @@ class RedisService
     {
         $json = json_encode($productDTO);
         $this->client->set(ProductDTO::PREFIX . $productDTO->id, $json, 'EX', 300);
-        $productDTO->getProduct($this->client->get(ProductDTO::PREFIX.$productDTO->id));
+        $productDTO->getCacheProduct($this->client->get(ProductDTO::PREFIX.$productDTO->id));
 
         return $productDTO;
     }
@@ -46,7 +46,7 @@ class RedisService
         if(!$this->client->get('product_cache_' . $id))
         {
             $product = $this->doctrine->getRepository(Products::class)->findOneBy(['id' => $id]);
-            $productDto->setProduct($product);
+            $productDto->setCacheProduct($product);
             return $this->setCacheProduct($productDto);
         }
         return $this->getCacheProduct($productDto);

@@ -3,20 +3,24 @@
 namespace App\Objects;
 
 use App\Entity\Products;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProductDTO
 {
     public int $id;
     public string $name;
-    public string $description;
+    public ?string $description = null;
     public int $price;
-    public string $image;
+    public ?string $image = null;
     public int $quantity;
+    public int $category;
+    public int $categoryId;
+    public string $categorySlug;
+    public string $isAvailable;
 
     const PREFIX = 'product_cache_';
 
-
-    public function setProduct(Products $product)
+    public function setCacheProduct(Products $product)
     {
         $this->id = $product->getId();
         $this->name = $product->getName();
@@ -26,7 +30,7 @@ class ProductDTO
         $this->quantity = $product->getQuantity();
     }
 
-    public function getProduct(string $json)
+    public function getCacheProduct(string $json)
     {
         $product = json_decode($json);
 

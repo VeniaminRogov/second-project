@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Products;
 use App\Form\ImportScvFormType;
 use App\Form\ProductsFormType;
@@ -31,21 +32,27 @@ class ProductsController extends AbstractController
     public function index(Request $request): Response
     {
         $sortObject = new SortCategoryObject();
-        $form = $this->createForm(SortCategoryFormType::class, $sortObject);
+        $sortForm = $this->createForm(SortCategoryFormType::class, $sortObject);
 
+        $sortForm->handleRequest($request);
+
+        $form = $this->createForm(ProductsFormType::class);
         $form->handleRequest($request);
 
         $productsByCategories = $this->manager->getRepository(Products::class)->sortByCategories($sortObject);
         $products = $this->manager->getRepository(Products::class)->findAll();
 
-        if ($form->isSubmitted()) {
+        $categories = $this->manager->getRepository(Category::class)->findAll();
+
+        if ($sortForm->isSubmitted()) {
             $pagination = $this->paginator->paginate(
                 $productsByCategories,
                 $sortObject->getPage(),
                 5
             );
             return $this->render('products/index.html.twig', [
-                'sortForm' => $form->createView(),
+                'sortForm' => $sortForm->createView(),
+                'form' => $form->createView(),
                 'pagination' => $pagination
             ]);
         }
@@ -53,12 +60,14 @@ class ProductsController extends AbstractController
         $pagination = $this->paginator->paginate(
             $products,
             $sortObject->getPage(),
-            5
+            10
         );
 
         return $this->render('products/index.html.twig', [
-            'sortForm' => $form->createView(),
+            'sortForm' => $sortForm->createView(),
+            'form' => $form->createView(),
             'pagination' => $pagination,
+            'categories' => $categories
         ]);
     }
 
@@ -72,6 +81,7 @@ class ProductsController extends AbstractController
             $products = $form->getData();
             $image = $form->get('image')->getData();
             $products = $this->productsService->createAndUpdate($id, $products, $image);
+
             return $this->redirectToRoute('manager_edit_products', [
                 'id' => $products->getId(),
             ]);
@@ -79,7 +89,9 @@ class ProductsController extends AbstractController
 
         return $this->render('products/form_products.html.twig', [
             'form' => $form->createView(),
-            'title' => $id ? $this->translator->trans('products.title.update', [], 'admin') :  $this->translator->trans('products.title.create', [], 'admin')
+            'img' => $products->getImage(),
+            'title' => $id ? $this->translator->trans('products.title.update', [], 'admin')
+                : $this->translator->trans('products.title.create', [], 'admin')
         ]);
     }
 
