@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Timestampable;
 
 #[ORM\Entity(repositoryClass: OrdersRepository::class)]
+#[ORM\Table(name: 'orders')]
 class Orders
 {
     #[ORM\Id]
