@@ -11,10 +11,9 @@ class ProductDTO
     public string $name;
     public ?string $description = null;
     public int $price;
-    public ?string $image = null;
-    public int $quantity;
+//    public ?string $image = null;
+    public ?int $quantity = null;
     public int $category;
-    public int $categoryId;
     public string $categorySlug;
     public string $isAvailable;
 
@@ -26,7 +25,7 @@ class ProductDTO
         $this->name = $product->getName();
         $this->description = $product->getDescription();
         $this->price = $product->getPrice();
-        $this->image = $product->getImage();
+//        $this->image = $product->getImage();
         $this->quantity = $product->getQuantity();
     }
 

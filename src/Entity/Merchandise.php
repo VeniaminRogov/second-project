@@ -4,12 +4,16 @@ namespace App\Entity;
 
 use App\Repository\ProductsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-#[ORM\Entity(repositoryClass: ProductsRepository::class)]
-class Products
+//#[ORM\Entity(repositoryClass: MerchandisesRepository::class)]
+#[ORM\Entity]
+#[ORM\InheritanceType('SINGLE_TABLE')]
+#[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
+#[ORM\DiscriminatorMap(["merchandise" => "Merchandise", "service" => "Service", "product" => "Product"])]
+#[ORM\Table(name: 'merchandises')]
+abstract class Merchandise
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -24,9 +28,6 @@ class Products
 
     #[ORM\Column(type: 'integer')]
     private $price;
-
-    #[ORM\Column(type: 'integer', length: 255)]
-    private $quantity;
 
     #[ORM\Column(type: 'boolean')]
     private $isAvailable;
@@ -48,9 +49,10 @@ class Products
 
     #[ORM\ManyToOne(targetEntity: OrderItems::class, inversedBy: 'product')]
     private $orderItems;
-
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Image::class)]
-    private $images;
+//
+//    #[ORM\OneToMany(mappedBy: 'product', targetEntity: Image::class, cascade: ['persist'])]
+//    #[ORM\JoinColumn(name: 'product_id', referencedColumnName: 'id', onDelete: 'SET NULL')]
+//    private $images;
 
     public function __construct()
     {
@@ -95,18 +97,6 @@ class Products
     public function setPrice(int $price): self
     {
         $this->price = $price;
-
-        return $this;
-    }
-
-    public function getQuantity(): ?string
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(string $quantity): self
-    {
-        $this->quantity = $quantity;
 
         return $this;
     }
@@ -175,34 +165,34 @@ class Products
         $this->orderItems = $orderItems;
     }
 
-    /**
-     * @return Collection<int, Image>
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
-
-    public function addImage(Image $image): self
-    {
-        if (!$this->images->contains($image)) {
-            $this->images[] = $image;
-            $image->setProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeImage(Image $image): self
-    {
-        if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
-            if ($image->getProduct() === $this) {
-                $image->setProduct(null);
-            }
-        }
-
-        return $this;
-    }
+//    /**
+//     * @return Collection<int, Image>
+//     */
+//    public function getImages(): Collection
+//    {
+//        return $this->images;
+//    }
+//
+//    public function addImage(Image $image): self
+//    {
+//        if (!$this->images->contains($image)) {
+//            $this->images[] = $image;
+//            $image->setProduct($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeImage(Image $image): self
+//    {
+//        if ($this->images->removeElement($image)) {
+//            // set the owning side to null (unless already changed)
+//            if ($image->getProduct() === $this) {
+//                $image->setProduct(null);
+//            }
+//        }
+//
+//        return $this;
+//    }
 
 }

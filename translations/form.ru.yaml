@@ -1,5 +1,6 @@
 form:
   quantity: Количество
+  time: Время
   category: Категория
   name: Название
   description: Описание

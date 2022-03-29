@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Entity\Category;
+use App\Entity\Merchandise;
 use App\Entity\Products;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -31,7 +32,7 @@ class ProductsService
         if(!$id){
             return $id;
         }
-        return $this->doctrine->getRepository(Products::class)->find($id);
+        return $this->doctrine->getRepository(Merchandise::class)->find($id);
     }
 
     public function createAndUpdate(?int $id, Products $products, $image): Products
@@ -57,7 +58,7 @@ class ProductsService
         return $this->targetDirectory;
     }
 
-    public function delete(Products $products): bool
+    public function delete(Merchandise $products): bool
     {
         $this->doctrine->remove($products);
         $this->doctrine->flush();

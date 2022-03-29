@@ -10,6 +10,7 @@ use App\Form\SortCategoryFormType;
 use App\Objects\ImportCsvObject;
 use App\Objects\SortCategoryObject;
 use App\Services\ProductsService;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,30 +40,33 @@ class ProductsController extends AbstractController
         $form = $this->createForm(ProductsFormType::class);
         $form->handleRequest($request);
 
-        $productsByCategories = $this->manager->getRepository(Products::class)->sortByCategories($sortObject);
-        $products = $this->manager->getRepository(Products::class)->findAll();
+        $products = $this->manager->getRepository('App:Product')->findAll();
+
+//        dd($req);
+//        $productsByCategories = $this->manager->getRepository(Products::class)->sortByCategories($sortObject);
+//        $products = $this->manager->getRepository(Products::class)->findAll();
 
         $categories = $this->manager->getRepository(Category::class)->findAll();
 
-        if ($sortForm->isSubmitted()) {
-            $pagination = $this->paginator->paginate(
-                $productsByCategories,
-                $sortObject->getPage(),
-                5
-            );
-            return $this->render('products/index.html.twig', [
-                'sortForm' => $sortForm->createView(),
-                'form' => $form->createView(),
-                'pagination' => $pagination
-            ]);
-        }
+//        if ($sortForm->isSubmitted()) {
+//            $pagination = $this->paginator->paginate(
+//                $productsByCategories,
+//                $sortObject->getPage(),
+//                5
+//            );
+//            return $this->render('products/index.html.twig', [
+//                'sortForm' => $sortForm->createView(),
+//                'form' => $form->createView(),
+//                'pagination' => $pagination
+//            ]);
+//        }
 
         $pagination = $this->paginator->paginate(
             $products,
             $sortObject->getPage(),
             10
         );
-
+        dump($products);
         return $this->render('products/index.html.twig', [
             'sortForm' => $sortForm->createView(),
             'form' => $form->createView(),

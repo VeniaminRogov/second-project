@@ -1,5 +1,6 @@
 form:
   quantity: Quantity
+  time: Time
   category: Category
   name: Name
   description: Description

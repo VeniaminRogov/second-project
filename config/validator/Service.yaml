@@ -1,0 +1,8 @@
+App\Objects\ServiceDTO:
+  properties:
+    name:
+      - NotBlank: ~
+    price:
+      - NotBlank: ~
+    time:
+      - NotBlank: ~

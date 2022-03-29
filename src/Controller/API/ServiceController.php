@@ -3,11 +3,9 @@
 namespace App\Controller\API;
 
 use App\Entity\Category;
-use App\Entity\Image;
-use App\Entity\Product;
 use App\Entity\Service;
 use App\Objects\ProductDTO;
-use App\Repository\ImageRepository;
+use App\Objects\ServiceDTO;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,7 +16,7 @@ use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class ProductController extends AbstractController
+class ServiceController extends AbstractController
 {
     public function __construct(
         private ManagerRegistry $manager,
@@ -28,60 +26,61 @@ class ProductController extends AbstractController
 
     public function index(): JsonResponse
     {
-        $products = $this->manager->getRepository('App:Product')->findAll();
+        $services = $this->manager->getRepository('App:Service')->findAll();
+        $data = [];
 
-        $dataProducts = [];
-        foreach ($products as $product)
+        foreach ($services as $service)
         {
-            $dataProducts[] = [
-                'id' => $product->getId(),
-                'name' => $product->getName(),
-                'description' => $product->getDescription(),
-                'price' => $product->getPrice(),
-                'quantity' => $product->getQuantity(),
-                'isAvailable' => $product->getIsAvailable(),
-                'createdAt' => $product->getCreatedAt(),
-                'updatedAt' => $product->getUpdatedAt(),
-                'category' => $product->getCategory()->getName(),
-                'orderItemsId' => $product->getOrderItems(),
+            $data[] = [
+                'id' => $service->getId(),
+                'name' => $service->getName(),
+                'description' => $service->getDescription(),
+                'price' => $service->getPrice(),
+                'time' => $service->getTime(),
+                'isAvailable' => $service->getIsAvailable(),
+                'createdAt' => $service->getCreatedAt(),
+                'updatedAt' => $service->getUpdatedAt(),
+                'category' => $service->getCategory()->getName(),
+                'orderItemsId' => $service->getOrderItems(),
             ];
         }
 
-        return new JsonResponse($dataProducts, Response::HTTP_OK);
+        return new JsonResponse($data, Response::HTTP_OK);
     }
 
     public function show(int $id): JsonResponse
     {
-        $product = $this->manager->getRepository("App:Product")->findOneBy(['id' => $id]);
+        $service = $this->manager->getRepository("App:Service")->findOneBy(['id' => $id]);
 
-        if($product == null)
+        if($service == null)
         {
             return new JsonResponse($this->translator->trans('products.status.not_found', [], 'admin'), Response::HTTP_NOT_FOUND);
         }
 
         $data[] = [
-            'id' => $product->getId(),
-            'name' => $product->getName(),
-            'description' => $product->getDescription(),
-            'price' => $product->getPrice(),
-            'isAvailable' => $product->getIsAvailable(),
-            'createdAt' => $product->getCreatedAt(),
-            'updatedAt' => $product->getUpdatedAt(),
-            'quantity' => $product->getQuantity(),
-            'category' => $product->getCategory()->getName(),
-            'categoryId' => $product->getCategory()->getId(),
-            'orderItemsId' => $product->getOrderItems(),
+            'id' => $service->getId(),
+            'name' => $service->getName(),
+            'description' => $service->getDescription(),
+            'price' => $service->getPrice(),
+            'isAvailable' => $service->getIsAvailable(),
+            'createdAt' => $service->getCreatedAt(),
+            'updatedAt' => $service->getUpdatedAt(),
+            'quantity' => $service->getTime(),
+            'category' => $service->getCategory()->getName(),
+            'categoryId' => $service->getCategory()->getId(),
+            'orderItemsId' => $service->getOrderItems(),
         ];
+
         return new JsonResponse($data, Response::HTTP_CREATED);
     }
 
     public function add(Request $request, SerializerInterface $serializer): JsonResponse
     {
         $data = $request->getContent();
-        $productDTO = $serializer->deserialize($data, ProductDTO::class, 'json');
+        $serviceDTO = $serializer->deserialize($data, ServiceDTO::class, 'json');
 //        dd($productDTO);
         $errors = [];
-        $violations = $this->validator->validate($productDTO);
+        $violations = $this->validator->validate($serviceDTO);
         if($violations->count() !== 0)
         {
             /** @var ConstraintViolation $violation */
@@ -95,36 +94,36 @@ class ProductController extends AbstractController
             return new JsonResponse($errors, Response::HTTP_BAD_REQUEST);
         }
 
-        $category = $this->manager->getRepository(Category::class)->find($productDTO->category);
+        $category = $this->manager->getRepository(Category::class)->find($serviceDTO->category);
 //        $image = $this->manager->getRepository(Image::class)->findOneBy(['name' => $productDTO->image]);
 
-            $product = new Product();
-            $product->setCategory($category);
-            $product->setName($productDTO->name);
-            $product->setDescription($productDTO->description);
-            $product->setPrice($productDTO->price);
-            $product->setQuantity($productDTO->quantity);
-            $product->setIsAvailable($productDTO->isAvailable);
+            $service = new Service();
+            $service->setCategory($category);
+            $service->setName($serviceDTO->name);
+            $service->setDescription($serviceDTO->description);
+            $service->setPrice($serviceDTO->price);
+            $service->setTime($serviceDTO->time);
+            $service->setIsAvailable($serviceDTO->isAvailable);
 
-            $this->manager->getManager()->persist($product);
+            $this->manager->getManager()->persist($service);
             $this->manager->getManager()->flush();
 
-            return $this->show($product->getId());
-}
+            return $this->show($service->getId());
+    }
 
     public function edit(int $id, Request $request, SerializerInterface $serializer): JsonResponse
     {
-        $product = $this->manager->getRepository("App:Product")->findOneBy(['id' => $id]);
-        if($product == null)
+        $service = $this->manager->getRepository("App:Service")->findOneBy(['id' => $id]);
+        if($service == null)
         {
             return new JsonResponse($this->translator->trans('products.status.not_found', [], 'admin'), Response::HTTP_NOT_FOUND);
         }
 
         $data = $request->getContent();
 
-        $productDTO = $serializer->deserialize($data, ProductDTO::class, 'json');
+        $serviceDTO = $serializer->deserialize($data, ServiceDTO::class, 'json');
 
-        $violations = $this->validator->validate($productDTO);
+        $violations = $this->validator->validate($serviceDTO);
 
         $errors = [];
         if($violations->count() !== 0)
@@ -140,42 +139,42 @@ class ProductController extends AbstractController
             return new JsonResponse($errors, Response::HTTP_BAD_REQUEST);
         }
 
-        foreach ($productDTO as $index => $item)
+        foreach ($serviceDTO as $index => $item)
         {
             if($index == 'name')
             {
-                $product->setName($item);
+                $service->setName($item);
             }
             if ($index == 'price')
             {
-                $product->setPrice($item);
+                $service->setPrice($item);
             }
             if ($index == 'category'){
                 $category = $this->manager->getRepository(Category::class)->find($productDTO->category);
-                $product->setCategory($category);
+                $service->setCategory($category);
             }
             if ($index == 'description')
             {
-                $product->setDescription($item);
+                $service->setDescription($item);
             }
             if($index == 'quantity')
             {
-                $product->setQuantity($item);
+                $service->setQuantity($item);
             }
             if($index == 'isAvailable')
             {
-                $product->setIsAvailable($item);
+                $service->setIsAvailable($item);
 
-                if ($product->getQuantity() <= 0)
+                if ($service->getQuantity() <= 0)
                 {
-                    $product->setIsAvailable(false);
+                    $service->setIsAvailable(false);
                 }
             }
         }
 
 //        $product->setName($productDTO->name);
 
-        $this->manager->getManager()->persist($product);
+        $this->manager->getManager()->persist($service);
         $this->manager->getManager()->flush();
 
         return new JsonResponse([
@@ -185,14 +184,15 @@ class ProductController extends AbstractController
 
     public function delete($id): JsonResponse
     {
-        $product = $this->manager->getRepository("App:Product")->find($id);
-        if(!$product)
+        $service = $this->manager->getRepository("App:Service")->find($id);
+        if(!$service)
         {
             return new JsonResponse($this->translator->trans('products.status.not_found', [], 'admin'), Response::HTTP_NOT_FOUND);
         }
 
-        $this->manager->getManager()->remove($product);
+        $this->manager->getManager()->remove($service);
         $this->manager->getManager()->flush();
+
         return new JsonResponse([
             'status' => $this->translator->trans('products.status.delete',[],'admin')
         ], Response::HTTP_OK);

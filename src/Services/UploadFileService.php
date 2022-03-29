@@ -11,7 +11,6 @@ class UploadFileService
     public function __construct(
         private $targetDirectory,
         private SluggerInterface $slugger,
-        private ImagineService $imagine,
     ){}
 
     public function getTargetDirectory()
@@ -35,10 +34,6 @@ class UploadFileService
         } catch (FileException $e){
             return 'Message: '.$e->getMessage();
         }
-
-        $filePath = '/uploads/images/'.$fileName;
-
-        $filteredImagePath = $this->imagine->setImagine($filePath);
 
         return $fileName;
     }

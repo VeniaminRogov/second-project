@@ -15,10 +15,10 @@
                     {% else %}
                     <div class="col">
                         <div class="card  shadow-sm">
-                            {% if product.image == null %}
-                            {% else %}
-                                <img class="card-img" src="{{ (image_url ~ product.image) | imagine_filter('medium_thumb') }}" alt="No found avatar">
-                            {% endif %}
+{#                            {% if product.image == null %}#}
+{#                            {% else %}#}
+{#                                <img class="card-img" src="{{ (image_url ~ product.image) | imagine_filter('medium_thumb') }}" alt="No found avatar">#}
+{#                            {% endif %}#}
                             <div class="card-body">
                                 <div class="clearfix mb-3">
                                     <span class="float-start badge rounded-pill bg-warning">{{ product.category.name }}</span>

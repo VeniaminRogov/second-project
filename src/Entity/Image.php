@@ -6,6 +6,7 @@ use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
+#[ORM\Table(name: 'images')]
 class Image
 {
     #[ORM\Id]
@@ -16,8 +17,8 @@ class Image
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[ORM\ManyToOne(targetEntity: Products::class, inversedBy: 'images')]
-    private $product;
+//    #[ORM\ManyToOne(targetEntity: Products::class, cascade: ['persist'], inversedBy: 'images')]
+//    private $product;
 
     public function getId(): ?int
     {
@@ -36,15 +37,15 @@ class Image
         return $this;
     }
 
-    public function getProduct(): ?Products
-    {
-        return $this->product;
-    }
-
-    public function setProduct(?Products $product): self
-    {
-        $this->product = $product;
-
-        return $this;
-    }
+//    public function getProduct(): ?Products
+//    {
+//        return $this->product;
+//    }
+//
+//    public function setProduct(?Products $product): self
+//    {
+//        $this->product = $product;
+//
+//        return $this;
+//    }
 }

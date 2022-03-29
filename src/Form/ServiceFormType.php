@@ -3,9 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Category;
-use App\Entity\Merchandise;
 use App\Entity\Product;
-use App\Entity\Products;
+use App\Entity\Service;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -15,11 +14,9 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use function Amp\Iterator\map;
 
-class ProductsFormType extends AbstractType
+class ServiceFormType extends AbstractType
 {
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -37,8 +34,8 @@ class ProductsFormType extends AbstractType
             ->add('price', IntegerType::class, [
                 'label' => 'form.price'
             ])
-            ->add('quantity', IntegerType::class,[
-                'label' => 'form.quantity'
+            ->add('time', IntegerType::class,[
+                'label' => 'form.time'
             ])
             ->add('isAvailable', CheckboxType::class, [
                 'label' => 'form.isActive',
@@ -57,7 +54,7 @@ class ProductsFormType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Product::class,
+            'data_class' => Service::class,
             'translation_domain' => 'form'
         ]);
     }

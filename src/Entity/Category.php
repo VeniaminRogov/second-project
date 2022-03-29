@@ -28,7 +28,7 @@ class Category
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $Slug;
 
-    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Products::class, cascade: ["persist"])]
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Merchandise::class, cascade: ["persist"])]
     private $products;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Category::class)]
@@ -75,14 +75,14 @@ class Category
     }
 
     /**
-     * @return Collection|Products[]
+     * @return Collection|Merchandise[]
      */
     public function getProducts(): Collection
     {
         return $this->products;
     }
 
-    public function addProduct(Products $product): self
+    public function addProduct(Merchandise $product): self
     {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
@@ -92,7 +92,7 @@ class Category
         return $this;
     }
 
-    public function removeProduct(Products $product): self
+    public function removeProduct(Merchandise $product): self
     {
         if ($this->products->removeElement($product)) {
             // set the owning side to null (unless already changed)

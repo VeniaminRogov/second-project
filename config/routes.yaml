@@ -114,42 +114,73 @@ order_create:
     path: cart/order/create
     controller: App\Controller\OrdersController::createOrder
 
-#API
-index:
+#API Product
+product_index:
     path: api/products
     controller: App\Controller\API\ProductController::index
     methods: GET
     options:
         expose: true
 
-show:
+product_show:
     path: api/products/{id<\d+>}
     controller: App\Controller\API\ProductController::show
     methods: GET
     options:
         expose: true
 
-add:
+product_add:
     path: api/products
     controller: App\Controller\API\ProductController::add
     methods: POST
     options:
         expose: true
 
-edit:
+product_edit:
     path: api/products/{id<\d+>}
     controller: App\Controller\API\ProductController::edit
     methods: PUT
 
-delete:
+product_delete:
     path: api/products/{id<\d+>}
     controller: App\Controller\API\ProductController::delete
     methods: DELETE
 
-create:
+product_create:
     path: api/images
     controller: App\Controller\API\ImageController::create
     methods: POST
     options:
         expose: true
 
+#API Service
+service_index:
+    path: api/services
+    controller: App\Controller\API\ServiceController::index
+    methods: GET
+    options:
+        expose: true
+
+service_show:
+    path: api/services/{id<\d+>}
+    controller: App\Controller\API\ServiceController::show
+    methods: GET
+    options:
+        expose: true
+
+service_add:
+    path: api/services
+    controller: App\Controller\API\ServiceController::add
+    methods: POST
+    options:
+        expose: true
+
+service_edit:
+    path: api/services/{id<\d+>}
+    controller: App\Controller\API\ServiceController::edit
+    methods: PUT
+
+service_delete:
+    path: api/services/{id<\d+>}
+    controller: App\Controller\API\ServiceController::delete
+    methods: DELETE
