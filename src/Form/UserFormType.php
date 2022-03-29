@@ -27,7 +27,7 @@ class UserFormType extends AbstractType
            ->add('email', EmailType::class, [
                'label' => 'form.email'
            ])
-           ->add('password', RepeatedType::class, [
+           ->add('plainPassword', RepeatedType::class, [
                'type' => PasswordType::class,
                'data' => '',
                'first_options' => ['label' => 'form.password'],

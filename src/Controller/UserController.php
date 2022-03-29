@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\SortUserFormType;
 use App\Form\UserFormType;
 use App\Objects\SortUserObject;
+use App\Repository\UserRepository;
 use App\Services\UserService;
 use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
@@ -25,6 +26,7 @@ class UserController extends AbstractController
         private UserService $userService,
         private TranslatorInterface $translator,
         private UserPasswordHasherInterface $hasher,
+        private UserRepository $repository
     )
     {}
 
@@ -87,15 +89,13 @@ class UserController extends AbstractController
 
     public function create(Request $request): Response
     {
-        $form = $this->createForm(UserFormType::class);
+        $user = new User();
+        $form = $this->createForm(UserFormType::class, $user);
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid())
         {
-            $data = $form->getData();
-            $password = $form->get('password')->getData();
-
-            $user = $data;
-            $user->setPassword($this->hasher->hashPassword($user, $password));
+            $user->setPassword($this->hasher->hashPassword($user, $user->getPlainPassword()));
 
             $this->manager->getManager()->persist($user);
             $this->manager->getManager()->flush();
@@ -111,18 +111,14 @@ class UserController extends AbstractController
 
     public function update(Request $request, int $id): Response
     {
-        $user = $this->manager->getRepository(User::class)->find($id);
+        $user = $this->repository->find($id);
 
         $form = $this->createForm(UserFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $data = $form->getData();
-            $password = $form->get('password')->getData();
-
-            $user = $data;
-            $user->setPassword($this->hasher->hashPassword($user, $password));
+            $user->setPassword($this->hasher->hashPassword($user, $user->getPlainPassword()));
 
             $this->manager->getManager()->persist($user);
             $this->manager->getManager()->flush();

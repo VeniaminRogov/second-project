@@ -38,6 +38,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 //    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Orders::class)]
 //    private $orders;
+    /**
+     * @var null
+     */
+    private $plainPassword;
 
     public function __construct()
     {
@@ -113,7 +117,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+         $this->plainPassword = null;
     }
 
 
@@ -188,4 +192,12 @@ public function removeOdersList(Orders $odersList): self
 
     return $this;
 }
+
+    /**
+     * @return null
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
 }
