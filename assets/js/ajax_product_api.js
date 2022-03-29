@@ -8,7 +8,7 @@ function appendProduct(value = null)
     $('.products-table').append($(`
         <tr>
             <td>${value.id}</td>
-            <td>${value.category}</td>
+            <td>${value.categoryName}</td>
             <td>
                <img src="" alt="Product ${value.name} not found">
             </td>

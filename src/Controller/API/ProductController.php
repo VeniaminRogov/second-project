@@ -8,6 +8,7 @@ use App\Entity\Product;
 use App\Entity\Service;
 use App\Objects\ProductDTO;
 use App\Repository\ImageRepository;
+use App\Repository\ProductRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -24,36 +25,40 @@ class ProductController extends AbstractController
         private ManagerRegistry $manager,
         private TranslatorInterface $translator,
         private ValidatorInterface $validator,
+        private ProductRepository $repository,
     ){}
 
     public function index(): JsonResponse
     {
-        $products = $this->manager->getRepository('App:Product')->findAll();
+        $products = $this->repository->findArr();
+//        dd($products);
+
+//        $products = $this->manager->getRepository(Product::class)->findAll();
 
         $dataProducts = [];
-        foreach ($products as $product)
-        {
-            $dataProducts[] = [
-                'id' => $product->getId(),
-                'name' => $product->getName(),
-                'description' => $product->getDescription(),
-                'price' => $product->getPrice(),
-                'quantity' => $product->getQuantity(),
-                'isAvailable' => $product->getIsAvailable(),
-                'createdAt' => $product->getCreatedAt(),
-                'updatedAt' => $product->getUpdatedAt(),
-                'category' => $product->getCategory()->getName(),
-                'orderItemsId' => $product->getOrderItems(),
-            ];
-        }
+//        foreach ($products as $product)
+//        {
+//            $dataProducts[] = [
+//                'id' => $product->getId(),
+//                'name' => $product->getName(),
+//                'description' => $product->getDescription(),
+//                'price' => $product->getPrice(),
+//                'quantity' => $product->getQuantity(),
+//                'isAvailable' => $product->getIsAvailable(),
+//                'createdAt' => $product->getCreatedAt(),
+//                'updatedAt' => $product->getUpdatedAt(),
+//                'category' => $product->getCategory()->getName(),
+//                'orderItemsId' => $product->getOrderItems(),
+//            ];
+//        }
 
-        return new JsonResponse($dataProducts, Response::HTTP_OK);
+        return new JsonResponse($products, Response::HTTP_OK);
     }
 
     public function show(int $id): JsonResponse
     {
-        $product = $this->manager->getRepository("App:Product")->findOneBy(['id' => $id]);
-
+//        $product = $this->manager->getRepository("App:Product")->findOneBy(['id' => $id]);
+        $this->repository->findArrById($id);
         if($product == null)
         {
             return new JsonResponse($this->translator->trans('products.status.not_found', [], 'admin'), Response::HTTP_NOT_FOUND);
