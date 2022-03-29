@@ -13,6 +13,7 @@ form:
   parent: Родительская категория
   email: Почта
   password: Пароль
+  repeat: Повторите пароль
   user_role:
     user: пользователь
     manager: менеджер

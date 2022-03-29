@@ -24,6 +24,7 @@ class UserController extends AbstractController
         private PaginatorInterface $paginator,
         private UserService $userService,
         private TranslatorInterface $translator,
+        private UserPasswordHasherInterface $hasher,
     )
     {}
 
@@ -62,25 +63,78 @@ class UserController extends AbstractController
         ]);
     }
 
-    public function createAndUpdate(Request $request, ?int $id): Response
-    {
-        $user = $this->userService->checkUserId($id);
+//    public function createAndUpdate(Request $request, ?int $id): Response
+//    {
+//        $user = $this->userService->checkUserId($id);
+//
+//        $form = $this->createForm(UserFormType::class, $user);
+//        $form->handleRequest($request);
+//        if($form->isSubmitted() && $form->isValid())
+//        {
+//            $user = $form->getData();
+//            $password = $form->get('password')->getData();
+//            $user = $this->userService->createAndUpdate($user, $password);
+//            return $this->redirectToRoute('admin_edit_user', [
+//                'id' => $user->getId()
+//            ]);
+//        }
+//
+//        return $this->renderForm('admin/form_user.html.twig', [
+//            'form' => $form,
+//            'title' => $id ? $this->translator->trans('users.title.update', [], 'admin') : $this->translator->trans('users.title.new', [], 'admin')
+//        ]);
+//    }
 
-        $form = $this->createForm(UserFormType::class, $user);
+    public function create(Request $request): Response
+    {
+        $form = $this->createForm(UserFormType::class);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
-            $user = $form->getData();
+            $data = $form->getData();
             $password = $form->get('password')->getData();
-            $user = $this->userService->createAndUpdate($user, $password);
+
+            $user = $data;
+            $user->setPassword($this->hasher->hashPassword($user, $password));
+
+            $this->manager->getManager()->persist($user);
+            $this->manager->getManager()->flush();
+
+            return $this->redirectToRoute('admin_user_list');
+        }
+
+        return $this->render('admin/form_user.html.twig', [
+            'form' => $form->createView(),
+            'title' => $this->translator->trans('users.title.new', [], 'admin')
+        ]);
+    }
+
+    public function update(Request $request, int $id): Response
+    {
+        $user = $this->manager->getRepository(User::class)->find($id);
+
+        $form = $this->createForm(UserFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $data = $form->getData();
+            $password = $form->get('password')->getData();
+
+            $user = $data;
+            $user->setPassword($this->hasher->hashPassword($user, $password));
+
+            $this->manager->getManager()->persist($user);
+            $this->manager->getManager()->flush();
+
             return $this->redirectToRoute('admin_edit_user', [
                 'id' => $user->getId()
             ]);
         }
 
-        return $this->renderForm('admin/form_user.html.twig', [
-            'form' => $form,
-            'title' => $id ? $this->translator->trans('users.title.update', [], 'admin') : $this->translator->trans('users.title.new', [], 'admin')
+        return $this->render('admin/form_user.html.twig', [
+            'form' => $form->createView(),
+            'title' => $this->translator->trans('users.title.update', [], 'admin')
         ]);
     }
 

@@ -30,11 +30,11 @@ admin_user_list:
 
 admin_add_user:
     path: /admin/user/add
-    controller: App\Controller\UserController::createAndUpdate
+    controller: App\Controller\UserController::create
 
 admin_edit_user:
     path: /admin/user/edit/{id<\d+>}
-    controller: App\Controller\UserController::createAndUpdate
+    controller: App\Controller\UserController::update
 
 admin_delete_user:
     path: /admin/user/delete/{id<\d+>}

@@ -13,6 +13,7 @@ form:
   parent: Parent category
   email: Email
   password: Password
+  repeat: Repeat password
   user_role:
     user: user
     manager: manager
