@@ -23,7 +23,7 @@ class ProductController extends AbstractController
     public function __construct(
         private ManagerRegistry $manager,
         private TranslatorInterface $translator,
-        private ValidatorInterface $validator,
+            private ValidatorInterface $validator,
     ){}
 
     public function index(): JsonResponse
