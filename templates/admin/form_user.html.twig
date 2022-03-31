@@ -6,12 +6,13 @@
 {% block pageTitle %}{{ title }}{% endblock %}
 {% block content %}
     <div class="form">
-        {{ form_start(form) }}
-            {{ form_row(form.email) }}
-            {{ form_row(form.plainPassword) }}
-            {{ form_row(form.roles) }}
-            {{ form_row(form.is_verified) }}
-            {{ form_row(form.save) }}
-        {{ form_end(form) }}
+        {{ form(form) }}
+{#        {{ form_start(form) }}#}
+{#            {{ form_row(form.email) }}#}
+{#            {{ form_row(form.plainPassword) }}#}
+{#            {{ form_row(form.roles) }}#}
+{#            {{ form_row(form.is_verified) }}#}
+{#            {{ form_row(form.save) }}#}
+{#        {{ form_end(form) }}#}
     </div>
 {% endblock %}

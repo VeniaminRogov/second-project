@@ -2,40 +2,29 @@
 
 namespace App\Command;
 
-use App\Entity\User;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Exceptions\ValidationException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use Symfony\Component\Messenger\MessageBusInterface;
 
 class CreateUserCommand extends Command
 {
     protected static $defaultName = 'app:create:user';
 
     public function __construct(
-        private ValidatorInterface $validator,
-        private UserPasswordHasherInterface $hasher,
-        private ManagerRegistry $manager,
+        private MessageBusInterface $bus,
     )
     {
         parent::__construct();
     }
 
-
-    protected function configure()
-    {
-        $this->addArgument('username', InputArgument::OPTIONAL, 'The email of user');
-//        $this->addArgument('password', InputArgument::REQUIRED, 'The password of user');
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $user = new User();
         $io = new SymfonyStyle($input, $output);
         $io->title('User Creator');
 
@@ -46,19 +35,14 @@ class CreateUserCommand extends Command
         $email = $helper->ask($input, $output, $emailQuest);
         $password = $helper->ask($input, $output, $passwordQuest);
 
-        $user->setEmail($email);
-        $user->setPassword($this->hasher->hashPassword($user, $password));
-        $user->setIsVerified(true);
-        $violations = $this->validator->validate($user);
-        if($violations->count() !== 0)
-        {
-           return Command::INVALID;
+        try {
+            $this->bus->dispatch(new \App\Messenger\CreateUserCommand($email, $password));
+        } catch (ValidationException $exception) {
+            foreach($exception->getConstraintViolationList() as $violation){
+                $io->error($violation->getMessage());
+            }
+            return Command::INVALID;
         }
-
-        $this->manager->getManager()->persist($user);
-        $this->manager->getManager()->flush();
-
-        $io->success('User '.$user->getEmail().' added');
 
         return Command::SUCCESS;
     }

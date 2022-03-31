@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\CreateUserFormType;
 use App\Form\SortUserFormType;
 use App\Form\UserFormType;
 use App\Objects\SortUserObject;
@@ -14,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -87,11 +88,12 @@ class UserController extends AbstractController
 //        ]);
 //    }
 
-    public function create(Request $request): Response
+    public function create(Request $request, KernelInterface $kernel): Response
     {
         $user = new User();
         $form = $this->createForm(UserFormType::class, $user);
         $form->handleRequest($request);
+
 
         if($form->isSubmitted() && $form->isValid())
         {
